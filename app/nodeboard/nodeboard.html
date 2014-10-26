@@ -1,0 +1,7 @@
+<div>
+    test
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="300">
+        <g ng-repeat="link in links" sf-link ng-attr-id="link_{{link.id}}" ng-attr-class="{{'ink '+link.className}}"></g>
+        <g ng-repeat="node in nodes" sf-node ng-attr-id="node_{{node.id}}" ng-attr-transform="translate({{node.x}},{{node.y}})" ng-attr-class="{{'node '+node.className}}"></g>
+    </svg>
+</div>

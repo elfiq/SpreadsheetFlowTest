@@ -30,15 +30,20 @@
     $script([
       'bower_components/angular/angular.js',
       'bower_components/angular-route/angular-route.js',
-      'app.js',
-      'view1/view1.js',
+      'bower_components/svg.js/dist/svg.js',
+      'nodeboard/nodeboard.js',
+        'nodeboard/node/node.js',
+
+        'view1/view1.js',
       'view2/view2.js',
       'components/version/version.js',
       'components/version/version-directive.js',
-      'components/version/interpolate-filter.js'
+      'components/version/interpolate-filter.js',
+        'app.js?1',
+
     ], function() {
       // when all is done, execute bootstrap angular application
-      angular.bootstrap(document, ['myApp']);
+      angular.bootstrap(document, ['SpreadsheedFlow']);
     });
   </script>
   <title>My AngularJS App</title>
@@ -46,7 +51,8 @@
 </head>
 <body ng-cloak>
   <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
+      <li><a href="#/nodeboard">Nodeboard</a></li>
+      <li><a href="#/view1">view1</a></li>
     <li><a href="#/view2">view2</a></li>
   </ul>
 

@@ -1,12 +1,13 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+angular.module('SpreadsheedFlow', [
   'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
+  'SpreadsheedFlow.view1',
+  'SpreadsheedFlow.view2',
+  'SpreadsheedFlow.Nodeboard',
+  'SpreadsheedFlow.version'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/nodeboard'});
 }]);

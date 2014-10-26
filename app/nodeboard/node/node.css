@@ -1,0 +1,21 @@
+.node.style1 .background {
+    fill:#2B99CA;
+}
+.node.style2 .background {
+    fill: #89C644;
+}
+.node .background{
+    fill: #c9c9c9;
+}
+.node .title {
+    fill:#fff;
+}
+.node {
+    cursor:pointer;
+}
+.node .slot {
+    stroke:#2B99CA;
+}
+.node .slot:hover {
+    fill:#c9c9c9;
+}

@@ -1,0 +1,19 @@
+<defs>
+    <filter id="shadowfilter" x="-10%" y="-10%" width="120%" height="120%">
+        <feOffset result="offOut" in="SourceGraphic" dx="0" dy="2" />
+        <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+        <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
+</defs>
+<g class="background" filter="url(#shadowfilter)">
+    <rect class="rect" rx="4" ry="4"></rect>
+    <g class="slot ingoing slot_{{index}}" ng-repeat="(index,slot) in node.ingoingSlots">
+        <circle class="slotBack" r="10"></circle>
+        <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
+    </g>
+    <g class="slot outgoing slot_{{index}}" ng-repeat="(index,slot) in node.outgoingSlots">
+        <circle class="slotBack" r="10"></circle>
+        <path d="M 0 5 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
+    </g>
+</g>
+<text class="title" font-size="18"><![CDATA[{{node.title}}]]></text>
