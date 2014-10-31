@@ -6,14 +6,14 @@
     </filter>
 </defs>
 <g class="background" filter="url(#shadowfilter)">
-    <rect class="rect" rx="4" ry="4"></rect>
-    <g class="slot ingoing slot_{{index}}" ng-repeat="(index,slot) in node.ingoingSlots">
+    <g ng-repeat="(index,slot) in node.ingoingSlots" id="slot_{{slot.id}}" class="slot ingoing slot_{{index}}" tooltip-append-to-body="true" tooltip="{{slot.title}}">
         <circle class="slotBack" r="10"></circle>
         <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
     </g>
-    <g class="slot outgoing slot_{{index}}" ng-repeat="(index,slot) in node.outgoingSlots">
+    <g ng-repeat="(index,slot) in node.outgoingSlots" id="slot_{{slot.id}}" class="slot outgoing slot_{{index}}" tooltip-placement="bottom" tooltip-append-to-body="true" tooltip="{{slot.title}}">
         <circle class="slotBack" r="10"></circle>
         <path d="M 0 5 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
     </g>
+    <rect class="rect" rx="4" ry="4"></rect>
 </g>
 <text class="title" font-size="18"><![CDATA[{{node.title}}]]></text>

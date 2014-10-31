@@ -30,7 +30,7 @@ var nodes = [
         id:113,
         title:"Node name",
         x:110,
-        y:90,
+        y:120,
         className:"style2",
         ingoingSlots:[
             {
@@ -71,9 +71,18 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute'])
     .controller('NodeboardCtrl', function($scope) {
         $scope.tmp = 'test';
 
+        $scope.scale = 1;
         $scope.nodes = nodes;
         $scope.links = links;
-        $scope.getWidth = function(id) {
-            document.getElementById(id).getComputedTextLength()
+        $scope.zoomIn = function () {
+            $scope.scale = $scope.scale * 1.1;
         }
+        $scope.zoomOut = function () {
+            $scope.scale = $scope.scale / 1.1;
+        }
+        // svgRoot =
+        $scope.translateFromPosition = function (x,y) {
+            return {x:x/$scope.scale,y:y/$scope.scale};
+        }
+
     });

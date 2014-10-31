@@ -1,7 +1,13 @@
 <div>
-    test
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="300">
-        <g ng-repeat="link in links" sf-link ng-attr-id="link_{{link.id}}" ng-attr-class="{{'ink '+link.className}}"></g>
-        <g ng-repeat="node in nodes" sf-node ng-attr-id="node_{{node.id}}" ng-attr-transform="translate({{node.x}},{{node.y}})" ng-attr-class="{{'node '+node.className}}"></g>
+    <svg class="nodeboard" xmlns="http://www.w3.org/2000/svg" width="100%" height="300">
+        <rect width="100%" height="100%" fill="#f9f9f9"></rect>
+        <g ng-attr-transform="scale({{scale}})">
+            <g ng-repeat="link in links" sf-link id="link_{{link.id}}" class="{{'link '+link.className}}"></g>
+            <g ng-repeat="node in nodes" sf-node id="node_{{node.id}}" ng-attr-transform="translate({{node.x}},{{node.y}})" class="{{'node '+node.className}}"></g>
+        </g>
     </svg>
+</div>
+<div class="controls">
+    <div class="button icon" ng-click="zoomIn()" data-title="test" bs-tooltip="tooltip">+</div>
+    <div class="button icon" ng-click="zoomOut()">-</div>
 </div>

@@ -4,7 +4,7 @@
 'use strict';
 var glob;
 angular.module('SpreadsheedFlow.Nodeboard')
-    .directive('sfNode',function () {
+    .directive('sfNode',function ($timeout) {
         return {
             templateUrl: function(elem, attr){
                 return 'nodeboard/node/node.html';
@@ -20,8 +20,9 @@ angular.module('SpreadsheedFlow.Nodeboard')
                         startDragPoint = {x:scope.node.x,y:scope.node.y};
                     })
                     .bind('drag', function(event, ui){
-                        scope.node.x = startDragPoint.x+ ui.position.left - ui.originalPosition.left;
-                        scope.node.y = startDragPoint.y+ ui.position.top - ui.originalPosition.top;
+                        var translatedPoint = scope.$parent.translateFromPosition(ui.position.left - ui.originalPosition.left,ui.position.top - ui.originalPosition.top)
+                        scope.node.x = startDragPoint.x+ translatedPoint.x;
+                        scope.node.y = startDragPoint.y+ translatedPoint.y;
                         scope.$apply();
                     });
                 scope.$watch("node", function (value) {
@@ -42,6 +43,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     for (i=0;i<cnt;i++) {
                         outgoingSlots.eq(i).attr('transform',"translate("+(i*25-(cnt-1)/2*25)+","+(h/2+7)+")");
                     }
+                    $timeout(function () { scope.$parent.$broadcast("nodePositionChange:"+scope.node.id); },0);
                 }, true);
 
             }
@@ -51,6 +53,25 @@ angular.module('SpreadsheedFlow.Nodeboard')
         return {
             templateUrl: function(elem, attr) {
                 return 'nodeboard/node/link.html'
+            },
+            link: function (scope, element, attrs) {
+                var $el = $(element);
+                var $root = $el.parent().parent();
+                //console.log();
+                var refresh = function () {
+                    var $fromSlot = $("#slot_"+scope.link.fromSlotId);
+                    var $toSlot = $("#slot_"+scope.link.toSlotId);
+                    if (!$fromSlot.length || !$toSlot.length) return;
+                    $fromSlot = $fromSlot[0].getBoundingClientRect();
+                    $toSlot = $toSlot[0].getBoundingClientRect();
+                    var rootPos = $root.position();
+                    var start = scope.$parent.translateFromPosition($fromSlot.left+$fromSlot.width/2 - rootPos.left, $fromSlot.top+$fromSlot.height - rootPos.top);
+                    var end = scope.$parent.translateFromPosition($toSlot.left+$toSlot.width/2 - rootPos.left, $toSlot.top - rootPos.top);
+                    $el.find('path').attr('d',"M "+start.x+" "+start.y+" Q "+(start.x)+" "+(start.y+10)+" "+(start.x+end.x)/2+" "+(start.y+end.y)/2+" Q "+end.x+" "+(end.y-10)+" "+end.x+" "+end.y);
+                }
+                scope.$on("nodePositionChange:"+scope.link.fromNodeId, refresh);
+                scope.$on("nodePositionChange:"+scope.link.toNodeId, refresh);
+
             }
         }
     })

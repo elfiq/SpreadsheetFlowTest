@@ -14,8 +14,7 @@
     cursor:pointer;
 }
 .node .slot {
-    stroke:#2B99CA;
 }
 .node .slot:hover {
-    fill:#c9c9c9;
+    fill:#000;
 }
