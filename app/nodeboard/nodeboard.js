@@ -58,7 +58,31 @@ var links = [
         fromSlotId:3,
         toSlotId:4
     }
-]
+];
+var newlink = {id:2,fromNodeId:112,toNodeId:113,fromSlotId:3,toSlotId:5};
+var newNode = {
+        id:114,
+        title:"NewNodeN ame",
+        x:310,
+        y:120,
+        className:"style1",
+        ingoingSlots:[
+            {
+                id:7,
+                title:'slot4'
+            },
+            {
+                id:8,
+                title:'slot5'
+            }
+        ],
+        outgoingSlots:[
+            {
+                id:9,
+                title:'slot6'
+            }
+        ]
+    };
 angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
@@ -74,6 +98,12 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute'])
         $scope.scale = 1;
         $scope.nodes = nodes;
         $scope.links = links;
+        $scope.addLink = function (link) {
+            $scope.links.push(link);
+        }
+        $scope.removeLink = function (linkId) {
+            //$scope.links
+        }
         $scope.zoomIn = function () {
             $scope.scale = $scope.scale * 1.1;
         }
