@@ -4,7 +4,7 @@
 'use strict';
 var glob;
 angular.module('SpreadsheedFlow.Nodeboard')
-    .directive('sfNode',function ($timeout) {
+    .directive('sfNode',['$timeout','$animate',function ($timeout,$animate) {
         return {
             templateUrl: function(elem, attr){
                 return 'nodeboard/node/node.html';
@@ -15,6 +15,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     //console.log('test');
                     var $el = $(element);
                     var startDragPoint = {x:0,y:0}
+                    setTimeout(function() {$el.find('.innerWrap').addClass('test1').removeClass('test1').addClass('test')},1);
                     $el.draggable()
                         .bind('mousedown', function(event, ui){
                             // bring to front
@@ -28,7 +29,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
                             scope.$apply();
                         });
                     scope.$watch("node", function (value) {
-                        var title = $el.children(".title");
+                        var title = $el.find(".title");
                         var rect = $el.find(".rect");
                         var w = title.width();
                         var h = title.height();
@@ -51,7 +52,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
                 return linkFunction;
             }
         };
-    })
+    }])
     .directive('sfLink', function () {
         return {
             templateUrl: function(elem, attr) {
@@ -64,7 +65,11 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     var refresh = function () {
                         var $fromSlot = $("#slot_"+scope.link.fromSlotId);
                         var $toSlot = $("#slot_"+scope.link.toSlotId);
-                        if (!$fromSlot.length || !$toSlot.length) return;
+                        if (!$fromSlot.length || !$toSlot.length) {
+                            $el.hide();
+                            return;
+                        }
+                        $el.show();
                         $fromSlot = $fromSlot[0].getBoundingClientRect();
                         $toSlot = $toSlot[0].getBoundingClientRect();
                         var rootPos = $root.position();
@@ -74,6 +79,10 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     }
                     scope.$on("nodePositionChange:"+scope.link.fromNodeId, refresh);
                     scope.$on("nodePositionChange:"+scope.link.toNodeId, refresh);
+                    scope.$watch("nodes", function(value) {
+                        console.log('test');
+                        refresh();
+                    });
                     refresh();
                 }
             }

@@ -2,8 +2,8 @@
     <svg class="nodeboard" xmlns="http://www.w3.org/2000/svg" width="100%" height="300">
         <rect width="100%" height="100%" fill="#f9f9f9"></rect>
         <g ng-attr-transform="scale({{scale}})">
-            <g data-ng-repeat="link in links" data-ng-instant sf-link id="link_{{link.id}}" class="{{'link '+link.className}}"></g>
-            <g ng-repeat="node in nodes" sf-node id="node_{{node.id}}" ng-attr-transform="translate({{node.x}},{{node.y}})" class="{{'node '+node.className}}"></g>
+            <g ng-animate="'animate'" ng-repeat="link in links" sf-link id="link_{{link.id}}" class="link {{link.className}}"></g>
+            <g ng-animate="'animate'" ng-repeat="node in nodes" sf-node id="node_{{node.id}}" class="node {{node.className}}" ng-attr-transform="translate({{node.x}},{{node.y}})"></g>
         </g>
     </svg>
 </div>

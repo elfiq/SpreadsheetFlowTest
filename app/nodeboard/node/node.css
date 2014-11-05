@@ -1,20 +1,41 @@
-.node.style1 .background {
-    fill:#2B99CA;
-}
-.node.style2 .background {
-    fill: #89C644;
-}
-.node .background{
-    fill: #c9c9c9;
-}
-.node .title {
-    fill:#fff;
-}
+.node .background{ fill: #c9c9c9 }
+.node .title { fill:#fff }
+.node.style1 .background { fill:#2B99CA }
+.node.style2 .background { fill: #89C644 }
+.node.style3 .background { fill: #DF1C1A }
+.node.style4 .background { fill: #191220 }
+.node.style5 .background { fill: #DEDDDF }
+.node.style5 .title { fill: #191220 }
 .node {
     cursor:pointer;
 }
-.node .slot {
-}
 .node .slot:hover {
     fill:#000;
+}
+
+.node.ng-enter, .node.ng-leave{
+	-webkit-transition:0.5s linear all;
+	-moz-transition:0.5s linear all;
+	-o-transition:0.5s linear all;
+	transition:0.5s linear all;
+}
+.node.ng-enter{opacity:0;}
+.node.ng-enter.ng-enter-active{opacity:1;}
+.node.ng-leave{opacity:1;}
+.node.ng-leave.ng-leave-active{opacity:0;}
+.node .innerWrap{
+	-webkit-transition:0.5s linear all;
+	-moz-transition:0.5s linear all;
+	-o-transition:0.5s linear all;
+	transition:0.5s linear all;
+	transform:scale(1,1);
+}
+.node.ng-enter.ng-enter-active .innerWrap{
+    transform:scale(1.1,1.1);
+}
+.node.ng-leave .innerWrap{
+	transform:scale(1,1);
+}
+.node.ng-leave.ng-leave-active .innerWrap{
+	transform:scale(0.9,0.9);
 }

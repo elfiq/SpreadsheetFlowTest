@@ -7,7 +7,8 @@ angular.module('SpreadsheedFlow', [
   'SpreadsheedFlow.view2',
   'SpreadsheedFlow.Nodeboard',
   'SpreadsheedFlow.version',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngAnimate'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/nodeboard'});

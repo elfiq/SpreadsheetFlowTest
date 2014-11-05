@@ -11,11 +11,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="nodeboard/node/node.css">
-    <link rel="stylesheet" href="nodeboard/nodeboard.css">
-  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <link rel="stylesheet" href="nodeboard/node/node.css">
+  <link rel="stylesheet" href="nodeboard/nodeboard.css">
 </head>
 <body>
   <ul class="menu">
@@ -36,10 +35,60 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
 
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+  <script>
+    (function($) {
+        'use strict';
+
+        $.fn.addClass = function (cssClasses)
+        {
+            this.each(function ()
+            {
+                var element = this;
+                if (cssClasses && element.setAttribute) {
+                    var existingClasses = (' ' + (element.getAttribute('class') || '') + ' ')
+                                            .replace(/[\n\t]/g, " ");
+
+                    $.each(cssClasses.split(' '), function(i, cssClass) {
+                      cssClass = cssClass.trim();
+                      if (existingClasses.indexOf(' ' + cssClass + ' ') === -1) {
+                        existingClasses += cssClass + ' ';
+                      }
+                    });
+
+                    element.setAttribute('class', existingClasses.trim());
+                }
+            });
+
+            return this;
+        };
+        $.fn.removeClass = function (cssClasses)
+        {
+          this.each(function ()
+          {
+              var element = this;
+              if (cssClasses && element.setAttribute) {
+                  var existingClasses = (' ' + (element.getAttribute('class') || '') + ' ')
+                                          .replace(/[\n\t]/g, " ");
+
+                  $.each(cssClasses.split(' '), function(i, cssClass) {
+                    cssClass = cssClass.trim();
+                    existingClasses = existingClasses.replace(new RegExp(' ' + cssClass + ' ','g'),' ');
+                  });
+
+                  element.setAttribute('class', existingClasses.trim());
+              }
+          });
+
+          return this;
+        }
+    })(jQuery);
+    </script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/ui-bootstrap/dist/ui-bootstrap-0.11.2.min.js"></script>
   <script src="bower_components/ui-bootstrap/dist/ui-bootstrap-tpls-0.11.2.min.js"></script>
   <script src="app.js"></script>

@@ -8,7 +8,7 @@ var nodes = [
         title:"Node short name",
         x:100,
         y:40,
-        className:"style1",
+        className:"style5",
         ingoingSlots:[
             {
                 id:1,
@@ -83,7 +83,7 @@ var newNode = {
             }
         ]
     };
-angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute'])
+angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute','ngAnimate'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/nodeboard', {
