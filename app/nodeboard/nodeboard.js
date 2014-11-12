@@ -2,87 +2,77 @@
  * Created by rodion on 22.10.14.
  */
 'use strict';
-var nodes = [
-    {
-        id:112,
-        title:"Node short name",
-        x:100,
-        y:40,
-        className:"style5",
-        ingoingSlots:[
-            {
-                id:1,
-                title:'slot1'
-            },
-            {
-                id:2,
-                title:'slot2'
-            }
-        ],
-        outgoingSlots:[
-            {
-                id:3,
-                title:'slot3'
-            }
-        ]
-    },
-    {
-        id:113,
-        title:"Node name",
-        x:110,
-        y:120,
-        className:"style2",
-        ingoingSlots:[
-            {
-                id:4,
-                title:'slot4'
-            },
-            {
-                id:5,
-                title:'slot5'
-            }
-        ],
-        outgoingSlots:[
-            {
-                id:6,
-                title:'slot6'
-            }
-        ]
+var nodes = [];
+var links = [];
+var randNodeId = 0;
+var randSlotId = 0;
+var randLinkId = 0;
+function addRandomNode(instant) {
+    randNodeId ++;
+    var node = {
+        id:randNodeId,
+        title:'Node Number #'+randNodeId,
+        x:Math.round(Math.random()*$(".nodeboard").width()),
+        y:Math.round(Math.random()*$(".nodeboard").height()),
+        className:"style"+Math.round(Math.random()*5),
+        ingoingSlots:[],
+        outgoingSlots:[]
     }
-];
-var links = [
-    {
-        id:1,
-        fromNodeId:112,
-        toNodeId:113,
-        fromSlotId:3,
-        toSlotId:4
+    var inSlotsCount = Math.round(Math.random()*3)+1;
+    for (var i=0;i<inSlotsCount;i++) {
+        randSlotId++;
+        node.ingoingSlots.push({
+            id:randSlotId,
+            title:'slot'+randSlotId
+        });
     }
-];
-var newlink = {id:2,fromNodeId:112,toNodeId:113,fromSlotId:3,toSlotId:5};
-var newNode = {
-        id:114,
-        title:"NewNodeN ame",
-        x:310,
-        y:120,
-        className:"style1",
-        ingoingSlots:[
-            {
-                id:7,
-                title:'slot4'
-            },
-            {
-                id:8,
-                title:'slot5'
-            }
-        ],
-        outgoingSlots:[
-            {
-                id:9,
-                title:'slot6'
-            }
-        ]
-    };
+    randSlotId++;
+    node.outgoingSlots.push({
+        id:randSlotId,
+        title:'slot'+randSlotId
+    });
+    if (instant) {
+        nodes.push(node);
+    } else {
+        $("#view").scope().$apply(function (scope) {
+            nodes.push(node);
+        });
+    }
+}
+function addRandomLink(instant) {
+    randLinkId++;
+    var fromNodeInd = Math.floor(Math.random()*nodes.length);
+    var toNodeInd = Math.floor(Math.random()*nodes.length);
+    if (toNodeInd == fromNodeInd) return false;
+    var toSlotInd = Math.floor(Math.random()*nodes[toNodeInd].ingoingSlots.length);
+    if (_(links).findWhere({
+        fromNodeId:nodes[fromNodeInd].id,
+        toNodeId:nodes[toNodeInd].id,
+        toSlotId:nodes[toNodeInd].ingoingSlots[toSlotInd].id
+    })) return false;
+    var link = {
+        id:randLinkId,
+        fromNodeId:nodes[fromNodeInd].id,
+        fromSlotId:nodes[fromNodeInd].outgoingSlots[0].id,
+        toNodeId:nodes[toNodeInd].id,
+        toSlotId:nodes[toNodeInd].ingoingSlots[toSlotInd].id
+    }
+    if (instant) {
+        links.push(link);
+    } else {
+        $("#view").scope().$apply(function (scope) {
+            links.push(link);
+        });
+    }
+}
+function fillRandomData() {
+    addRandomNode(true);
+    addRandomNode(true);
+    addRandomNode(true);
+    addRandomLink(true);
+    addRandomLink(true);
+    addRandomLink(true);
+}
 angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute','ngAnimate'])
 
     .config(['$routeProvider', function($routeProvider) {
@@ -95,6 +85,7 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute','ngAnimate'])
     .controller('NodeboardCtrl', function($scope) {
         $scope.tmp = 'test';
 
+        fillRandomData();
         $scope.scale = 1;
         $scope.nodes = nodes;
         $scope.links = links;

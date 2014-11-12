@@ -12,22 +12,29 @@
 .node .slot:hover {
     fill:#000;
 }
+.node:hover .background {
+	stroke:#c9c9c9;
+}
+.node .slotArrow {
+	fill:rgba(255,255,255,0.5);
+	stroke:none;
+}
 
 .node.ng-enter, .node.ng-leave{
-	-webkit-transition:0.5s linear all;
-	-moz-transition:0.5s linear all;
-	-o-transition:0.5s linear all;
-	transition:0.5s linear all;
+	-webkit-transition:0.5s ease-in-out all;
+	-moz-transition:0.5s ease-in-out all;
+	-o-transition:0.5s ease-in-out all;
+	transition:0.5s ease-in-out all;
 }
 .node.ng-enter{opacity:0;}
 .node.ng-enter.ng-enter-active{opacity:1;}
 .node.ng-leave{opacity:1;}
 .node.ng-leave.ng-leave-active{opacity:0;}
 .node .innerWrap{
-	-webkit-transition:0.5s linear all;
-	-moz-transition:0.5s linear all;
-	-o-transition:0.5s linear all;
-	transition:0.5s linear all;
+	-webkit-transition:0.5s ease-in-out all;
+	-moz-transition:0.5s ease-in-out all;
+	-o-transition:0.5s ease-in-out all;
+	transition:0.5s ease-in-out all;
 	transform:scale(1,1);
 }
 .node.ng-enter.ng-enter-active .innerWrap{
@@ -38,4 +45,8 @@
 }
 .node.ng-leave.ng-leave-active .innerWrap{
 	transform:scale(0.9,0.9);
+}
+.node:hover .innerWrap,.node:active .innerWrap{
+	stroke:#000;
+	transform:scale(1.05,1.05);
 }
