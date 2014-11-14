@@ -83,7 +83,6 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute','ngAnimate'])
     }])
 
     .controller('NodeboardCtrl', function($scope) {
-        $scope.tmp = 'test';
 
         fillRandomData();
         $scope.scale = 1;
