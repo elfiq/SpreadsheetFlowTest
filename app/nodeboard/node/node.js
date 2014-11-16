@@ -2,51 +2,72 @@
  * Created by rodion on 23.10.14.
  */
 'use strict';
-var glob;
 angular.module('SpreadsheedFlow.Nodeboard')
     .directive('sfNode',['$timeout','$animate',function ($timeout,$animate) {
         return {
-            templateUrl: function(elem, attr){
-                return 'nodeboard/node/node.html';
-            },
             compile:function(element, attrs) {
                 var linkFunction = function(scope, element, attrs) {
                     // Title element
-                    //console.log('test');
                     var $el = $(element);
-                    var startDragPoint = {x:0,y:0}
-                    setTimeout(function() {$el.find('.innerWrap').addClass('test1').removeClass('test1').addClass('test')},1);
+                    var startDragPoint = {x:0,y:0};
+                    interact($el[0])
+                        .draggable({
+                            onstart: function (event) {
+                                $el.parent().append( $el );
+                                startDragPoint = {x:scope.node.x,y:scope.node.y};
+                            },
+                            onmove : function (event) {
+                                var translatedPoint = scope.$parent.translateFromPosition(event.clientX - event.clientX0,event.clientY - event.clientY0);
+                                scope.node.x = startDragPoint.x + translatedPoint.x;
+                                scope.node.y = startDragPoint.y + translatedPoint.y;
+                                scope.$apply();
+                            },
+                            onend  : function (event) {
+                                console.log('endDrag', event);
+                            }
+                        })
+                        .inertia(true);
+                    /*var startDragPoint = {x:0,y:0}, x = 0, y = 0, startX = 0, startY = 0;
                     $el.draggable()
                         .bind('mousedown', function(event, ui){
-                            // bring to front
+                            // bring to front. правда из-за этого все анимации заново начинаются
                             $el.parent().append( $el );
+                            startX = event.screenX - x;
+                            startY = event.screenY - y;
                             startDragPoint = {x:scope.node.x,y:scope.node.y};
                         })
+                        .bind('dragstart', function (event, ui) {
+                            console.log(ui,'tetse');
+                        })
                         .bind('drag', function(event, ui){
-                            var translatedPoint = scope.$parent.translateFromPosition(ui.position.left - ui.originalPosition.left,ui.position.top - ui.originalPosition.top)
+                            y = event.screenY - startY;
+                            x = event.screenX - startX;
+                            var translatedPoint = scope.$parent.translateFromPosition(x,y)
                             scope.node.x = startDragPoint.x+ translatedPoint.x;
                             scope.node.y = startDragPoint.y+ translatedPoint.y;
                             scope.$apply();
-                        });
+                        });*/
                     scope.$watch("node", function (value) {
-                        var title = $el.find(".title");
-                        var rect = $el.find(".rect");
-                        var w = title.width();
-                        var h = title.height();
-                        title.attr({x:-w/2,y:h/2-5});
-                        rect.attr({x:-w/2-10,y:-h/2-7,width:w+20,height:h+14});
-                        var ingoingSlots = $el.find(".ingoing");
-                        var cnt = ingoingSlots.length;
-                        var i;
-                        for (i=0;i<cnt;i++) {
-                            ingoingSlots.eq(i).attr('transform',"translate("+(i*25-(cnt-1)/2*25)+","+(-h/2-7)+")");
-                        }
-                        var outgoingSlots = $el.find(".outgoing");
-                        cnt = outgoingSlots.length;
-                        for (i=0;i<cnt;i++) {
-                            outgoingSlots.eq(i).attr('transform',"translate("+(i*25-(cnt-1)/2*25)+","+(h/2+7)+")");
-                        }
-                        $timeout(function () { scope.$parent.$broadcast("nodePositionChange:"+scope.node.id); },0);
+                        setTimeout(function () {
+                            var title = $el.find(".title");
+                            var rect = $el.find(".rect");
+                            var w = title[0].getBBox().width;
+                            var h = title[0].getBBox().height;
+                            title.attr({x:-w/2,y:h/2-5});
+                            rect.attr({x:-w/2-10,y:-h/2-7,width:w+20,height:h+14});
+                            var ingoingSlots = $el.find(".ingoing");
+                            var cnt = ingoingSlots.length;
+                            var i;
+                            for (i=0;i<cnt;i++) {
+                                ingoingSlots.eq(i).attr('transform',"translate("+(i*25-(cnt-1)/2*25)+","+(-h/2-7)+")");
+                            }
+                            var outgoingSlots = $el.find(".outgoing");
+                            cnt = outgoingSlots.length;
+                            for (i=0;i<cnt;i++) {
+                                outgoingSlots.eq(i).attr('transform',"translate("+(i*25-(cnt-1)/2*25)+","+(h/2+7)+")");
+                            }
+                            $timeout(function () { scope.$parent.$broadcast("nodePositionChange:"+scope.node.id); },0);
+                        },100);
                     }, true);
                 }
                 return linkFunction;
@@ -55,9 +76,6 @@ angular.module('SpreadsheedFlow.Nodeboard')
     }])
     .directive('sfLink', function () {
         return {
-            templateUrl: function(elem, attr) {
-                return 'nodeboard/node/link.html'
-            },
             compile:function(element, attrs) {
                 return function (scope, element, attrs) {
                     var $el = $(element);
@@ -88,3 +106,21 @@ angular.module('SpreadsheedFlow.Nodeboard')
             }
         }
     })
+    .animation(".show-node", function () {
+        return {
+            enter: function (element, done) {
+                element.css({
+                    opacity:0
+                }).animate({
+                    opacity:1
+                },500, done);
+            },
+            leave: function (element, done) {
+                element.css({
+                    opacity:1
+                }).animate({
+                    opacity:0
+                },300, done);
+            }
+        }
+    });

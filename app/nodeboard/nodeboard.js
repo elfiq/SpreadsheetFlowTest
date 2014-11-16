@@ -65,6 +65,12 @@ function addRandomLink(instant) {
         });
     }
 }
+function clearNodes() {
+    $("#view").scope().$apply(function (scope) {
+        links.length = 0;
+        nodes.length = 0;
+    });
+}
 function fillRandomData() {
     addRandomNode(true);
     addRandomNode(true);
@@ -73,36 +79,36 @@ function fillRandomData() {
     addRandomLink(true);
     addRandomLink(true);
 }
-angular.module('SpreadsheedFlow.Nodeboard', ['ngRoute','ngAnimate'])
-
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/nodeboard', {
-            templateUrl: 'nodeboard/nodeboard.html',
-            controller: 'NodeboardCtrl'
-        });
-    }])
-
-    .controller('NodeboardCtrl', function($scope) {
-
-        fillRandomData();
-        $scope.scale = 1;
-        $scope.nodes = nodes;
-        $scope.links = links;
-        $scope.addLink = function (link) {
-            $scope.links.push(link);
+angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
+   
+    .directive('sfNodeboard', function () {
+        return {
+            templateUrl: function(elem, attr) {
+                return 'nodeboard/nodeboard.html'
+            },
+            compile:function(element, attrs) {
+                return function ($scope, element, attrs) {
+                    fillRandomData();
+                    $scope.scale = 1;
+                    $scope.nodes = nodes;
+                    $scope.links = links;
+                    $scope.addLink = function (link) {
+                        $scope.links.push(link);
+                    }
+                    $scope.removeLink = function (linkId) {
+                        //$scope.links
+                    }
+                    $scope.zoomIn = function () {
+                        $scope.scale = $scope.scale * 1.1;
+                    }
+                    $scope.zoomOut = function () {
+                        $scope.scale = $scope.scale / 1.1;
+                    }
+                    // svgRoot =
+                    $scope.translateFromPosition = function (x,y) {
+                        return {x:x/$scope.scale,y:y/$scope.scale};
+                    }
+                }
+            }
         }
-        $scope.removeLink = function (linkId) {
-            //$scope.links
-        }
-        $scope.zoomIn = function () {
-            $scope.scale = $scope.scale * 1.1;
-        }
-        $scope.zoomOut = function () {
-            $scope.scale = $scope.scale / 1.1;
-        }
-        // svgRoot =
-        $scope.translateFromPosition = function (x,y) {
-            return {x:x/$scope.scale,y:y/$scope.scale};
-        }
-
     });
