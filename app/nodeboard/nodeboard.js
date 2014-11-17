@@ -92,6 +92,11 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     $scope.scale = 1;
                     $scope.nodes = nodes;
                     $scope.links = links;
+                    $scope.position = {x:0,y:0};
+
+                    var $board = $(".board",element);
+                    var leftTopPoint = {x:$board.offset().left, y: $board.offset().top};
+
                     $scope.addLink = function (link) {
                         $scope.links.push(link);
                     }
@@ -105,9 +110,40 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                         $scope.scale = $scope.scale / 1.1;
                     }
                     // svgRoot =
-                    $scope.translateFromPosition = function (x,y) {
-                        return {x:x/$scope.scale,y:y/$scope.scale};
+                    $scope.convertPointClientToBoard = function (clientX,clientY) {
+                        return {
+                            x:(clientX-leftTopPoint.x-$scope.position.x)/$scope.scale,
+                            y:(clientY-leftTopPoint.y-$scope.position.y)/$scope.scale
+                        };
                     }
+                    $scope.convertDistanceClientToBoard = function (clientWidth, clientHeight) {
+                        return {
+                            x:(clientWidth)/$scope.scale,
+                            y:(clientHeight)/$scope.scale
+                        };
+                    }
+
+                    var startDragPoint = {x:0,y:0};
+                    interact($board[0])
+                        .draggable({
+                            onstart: function (event) {
+                                console.log('startdrag');
+                                startDragPoint = {x:$scope.position.x,y:$scope.position.y};
+                            },
+                            onmove : function (event) {
+                                //console.log(event);
+                                var translatedPoint = $scope.convertDistanceClientToBoard(event.dx,event.dy)
+                                //var translatedPoint = $scope.convertDistanceClientToBoard(event.clientX -event.clientX0,event.clientY-event.clientY0);
+                                $scope.position.x = $scope.position.x+translatedPoint.x;
+                                $scope.position.y = $scope.position.y+translatedPoint.y;
+                                $scope.$apply();
+                            },
+                            onend  : function (event) {
+                                console.log('enddrag');
+
+                            }
+                        })
+                        .inertia(true);
                 }
             }
         }

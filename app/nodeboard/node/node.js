@@ -17,36 +17,17 @@ angular.module('SpreadsheedFlow.Nodeboard')
                                 startDragPoint = {x:scope.node.x,y:scope.node.y};
                             },
                             onmove : function (event) {
-                                var translatedPoint = scope.$parent.translateFromPosition(event.clientX - event.clientX0,event.clientY - event.clientY0);
+                                var translatedPoint = scope.$parent.convertPointClientToBoard(event.clientX - event.clientX0,event.clientY - event.clientY0);
                                 scope.node.x = startDragPoint.x + translatedPoint.x;
                                 scope.node.y = startDragPoint.y + translatedPoint.y;
                                 scope.$apply();
                             },
                             onend  : function (event) {
-                                console.log('endDrag', event);
+                                //console.log('endDrag', event);
                             }
                         })
                         .inertia(true);
-                    /*var startDragPoint = {x:0,y:0}, x = 0, y = 0, startX = 0, startY = 0;
-                    $el.draggable()
-                        .bind('mousedown', function(event, ui){
-                            // bring to front. правда из-за этого все анимации заново начинаются
-                            $el.parent().append( $el );
-                            startX = event.screenX - x;
-                            startY = event.screenY - y;
-                            startDragPoint = {x:scope.node.x,y:scope.node.y};
-                        })
-                        .bind('dragstart', function (event, ui) {
-                            console.log(ui,'tetse');
-                        })
-                        .bind('drag', function(event, ui){
-                            y = event.screenY - startY;
-                            x = event.screenX - startX;
-                            var translatedPoint = scope.$parent.translateFromPosition(x,y)
-                            scope.node.x = startDragPoint.x+ translatedPoint.x;
-                            scope.node.y = startDragPoint.y+ translatedPoint.y;
-                            scope.$apply();
-                        });*/
+
                     scope.$watch("node", function (value) {
                         setTimeout(function () {
                             var title = $el.find(".title");
@@ -91,8 +72,8 @@ angular.module('SpreadsheedFlow.Nodeboard')
                         $fromSlot = $fromSlot[0].getBoundingClientRect();
                         $toSlot = $toSlot[0].getBoundingClientRect();
                         var rootPos = $root.position();
-                        var start = scope.$parent.translateFromPosition($fromSlot.left+$fromSlot.width/2 - rootPos.left, $fromSlot.top+$fromSlot.height - rootPos.top);
-                        var end = scope.$parent.translateFromPosition($toSlot.left+$toSlot.width/2 - rootPos.left, $toSlot.top - rootPos.top);
+                        var start = scope.$parent.convertPointClientToBoard($fromSlot.left+$fromSlot.width/2 - rootPos.left, $fromSlot.top+$fromSlot.height - rootPos.top);
+                        var end = scope.$parent.convertPointClientToBoard($toSlot.left+$toSlot.width/2 - rootPos.left, $toSlot.top - rootPos.top);
                         $el.find('path').attr('d',"M "+start.x+" "+start.y+" Q "+(start.x)+" "+(start.y+10)+" "+(start.x+end.x)/2+" "+(start.y+end.y)/2+" Q "+end.x+" "+(end.y-10)+" "+end.x+" "+end.y);
                     }
                     scope.$on("nodePositionChange:"+scope.link.fromNodeId, refresh);
