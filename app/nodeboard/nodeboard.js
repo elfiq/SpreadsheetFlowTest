@@ -95,6 +95,15 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     $scope.position = {x:0,y:0};
 
                     var $board = $(".board",element);
+                    $board.bind('mousewheel', function(event) {
+                       if (event.originalEvent.wheelDelta>0) {
+                           $scope.zoomIn(1+0.05*event.originalEvent.wheelDelta/120);
+                           $scope.$apply();
+                       } else {
+                           $scope.zoomOut(1+0.05*(-event.originalEvent.wheelDelta)/120);
+                           $scope.$apply();
+                       }
+                    });
                     var leftTopPoint = {x:$board.offset().left, y: $board.offset().top};
 
                     $scope.addLink = function (link) {
@@ -103,11 +112,13 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     $scope.removeLink = function (linkId) {
                         //$scope.links
                     }
-                    $scope.zoomIn = function () {
-                        $scope.scale = $scope.scale * 1.1;
+                    $scope.zoomIn = function (val) {
+                        if (val==undefined) val = 1.1;
+                        $scope.scale = $scope.scale * val;
                     }
-                    $scope.zoomOut = function () {
-                        $scope.scale = $scope.scale / 1.1;
+                    $scope.zoomOut = function (val) {
+                        if (val==undefined) val = 1.1;
+                        $scope.scale = $scope.scale / val;
                     }
                     // svgRoot =
                     $scope.convertPointClientToBoard = function (clientX,clientY) {
