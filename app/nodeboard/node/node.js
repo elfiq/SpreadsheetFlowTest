@@ -27,26 +27,6 @@ angular.module('SpreadsheedFlow.Nodeboard')
                             }
                         })
                         .inertia(true);
-                    /*var startDragPoint = {x:0,y:0}, x = 0, y = 0, startX = 0, startY = 0;
-                    $el.draggable()
-                        .bind('mousedown', function(event, ui){
-                            // bring to front. правда из-за этого все анимации заново начинаются
-                            $el.parent().append( $el );
-                            startX = event.screenX - x;
-                            startY = event.screenY - y;
-                            startDragPoint = {x:scope.node.x,y:scope.node.y};
-                        })
-                        .bind('dragstart', function (event, ui) {
-                            console.log(ui,'tetse');
-                        })
-                        .bind('drag', function(event, ui){
-                            y = event.screenY - startY;
-                            x = event.screenX - startX;
-                            var translatedPoint = scope.$parent.translateFromPosition(x,y)
-                            scope.node.x = startDragPoint.x+ translatedPoint.x;
-                            scope.node.y = startDragPoint.y+ translatedPoint.y;
-                            scope.$apply();
-                        });*/
                     scope.$watch("node", function (value) {
                         setTimeout(function () {
                             var title = $el.find(".title");
