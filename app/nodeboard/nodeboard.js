@@ -92,22 +92,60 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     $scope.scale = 1;
                     $scope.nodes = nodes;
                     $scope.links = links;
+                    $scope.position = {x:0,y:0};
+
+                    var $board = $(".board",element);
+                    $board.bind('mousewheel', function(event) {
+                       if (event.originalEvent.wheelDelta>0) {
+                           $scope.zoomIn(1+0.05*event.originalEvent.wheelDelta/120);
+                           $scope.$apply();
+                       } else {
+                           $scope.zoomOut(1+0.05*(-event.originalEvent.wheelDelta)/120);
+                           $scope.$apply();
+                       }
+                    });
+                    var leftTopPoint = {x:$board.offset().left, y: $board.offset().top};
+
                     $scope.addLink = function (link) {
                         $scope.links.push(link);
                     }
                     $scope.removeLink = function (linkId) {
                         //$scope.links
                     }
-                    $scope.zoomIn = function () {
-                        $scope.scale = $scope.scale * 1.1;
+                    $scope.zoomIn = function (val) {
+                        if (val==undefined) val = 1.1;
+                        $scope.scale = $scope.scale * val;
                     }
-                    $scope.zoomOut = function () {
-                        $scope.scale = $scope.scale / 1.1;
+                    $scope.zoomOut = function (val) {
+                        if (val==undefined) val = 1.1;
+                        $scope.scale = $scope.scale / val;
                     }
                     // svgRoot =
-                    $scope.translateFromPosition = function (x,y) {
-                        return {x:x/$scope.scale,y:y/$scope.scale};
+                    $scope.convertPointClientToBoard = function (clientX,clientY) {
+                        return {
+                            x:(clientX-leftTopPoint.x-$scope.position.x)/$scope.scale,
+                            y:(clientY-leftTopPoint.y-$scope.position.y)/$scope.scale
+                        };
                     }
+                    $scope.convertDistanceClientToBoard = function (clientWidth, clientHeight) {
+                        return {
+                            x:(clientWidth)/$scope.scale,
+                            y:(clientHeight)/$scope.scale
+                        };
+                    }
+
+                    var startDragPoint = {x:0,y:0};
+                    interact($board[0])
+                        .draggable({
+                            onmove : function (event) {
+                                $scope.position.x = $scope.position.x+event.dx;
+                                $scope.position.y = $scope.position.y+event.dy;
+                                $scope.$apply();
+                            }
+                        })
+                        .inertia({
+                            esistance     : 100
+                        });
                 }
             }
         }
