@@ -17,7 +17,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
                                 startDragPoint = {x:scope.node.x,y:scope.node.y};
                             },
                             onmove : function (event) {
-                                var translatedPoint = scope.$parent.convertPointClientToBoard(event.clientX - event.clientX0,event.clientY - event.clientY0);
+                                var translatedPoint = scope.$parent.convertDistanceClientToBoard(event.clientX - event.clientX0,event.clientY - event.clientY0);
                                 scope.node.x = startDragPoint.x + translatedPoint.x;
                                 scope.node.y = startDragPoint.y + translatedPoint.y;
                                 scope.$apply();
@@ -55,38 +55,6 @@ angular.module('SpreadsheedFlow.Nodeboard')
             }
         };
     }])
-    .directive('sfLink', function () {
-        return {
-            compile:function(element, attrs) {
-                return function (scope, element, attrs) {
-                    var $el = $(element);
-                    var $root = $el.parent().parent();
-                    var refresh = function () {
-                        var $fromSlot = $("#slot_"+scope.link.fromSlotId);
-                        var $toSlot = $("#slot_"+scope.link.toSlotId);
-                        if (!$fromSlot.length || !$toSlot.length) {
-                            $el.hide();
-                            return;
-                        }
-                        $el.show();
-                        $fromSlot = $fromSlot[0].getBoundingClientRect();
-                        $toSlot = $toSlot[0].getBoundingClientRect();
-                        var rootPos = $root.position();
-                        var start = scope.$parent.convertPointClientToBoard($fromSlot.left+$fromSlot.width/2 - rootPos.left, $fromSlot.top+$fromSlot.height - rootPos.top);
-                        var end = scope.$parent.convertPointClientToBoard($toSlot.left+$toSlot.width/2 - rootPos.left, $toSlot.top - rootPos.top);
-                        $el.find('path').attr('d',"M "+start.x+" "+start.y+" Q "+(start.x)+" "+(start.y+10)+" "+(start.x+end.x)/2+" "+(start.y+end.y)/2+" Q "+end.x+" "+(end.y-10)+" "+end.x+" "+end.y);
-                    }
-                    scope.$on("nodePositionChange:"+scope.link.fromNodeId, refresh);
-                    scope.$on("nodePositionChange:"+scope.link.toNodeId, refresh);
-                    scope.$watch("nodes", function(value) {
-                        console.log('test');
-                        refresh();
-                    });
-                    refresh();
-                }
-            }
-        }
-    })
     .animation(".show-node", function () {
         return {
             enter: function (element, done) {

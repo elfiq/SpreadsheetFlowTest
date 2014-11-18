@@ -126,24 +126,15 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     var startDragPoint = {x:0,y:0};
                     interact($board[0])
                         .draggable({
-                            onstart: function (event) {
-                                console.log('startdrag');
-                                startDragPoint = {x:$scope.position.x,y:$scope.position.y};
-                            },
                             onmove : function (event) {
-                                //console.log(event);
-                                var translatedPoint = $scope.convertDistanceClientToBoard(event.dx,event.dy)
-                                //var translatedPoint = $scope.convertDistanceClientToBoard(event.clientX -event.clientX0,event.clientY-event.clientY0);
-                                $scope.position.x = $scope.position.x+translatedPoint.x;
-                                $scope.position.y = $scope.position.y+translatedPoint.y;
+                                $scope.position.x = $scope.position.x+event.dx;
+                                $scope.position.y = $scope.position.y+event.dy;
                                 $scope.$apply();
-                            },
-                            onend  : function (event) {
-                                console.log('enddrag');
-
                             }
                         })
-                        .inertia(true);
+                        .inertia({
+                            esistance     : 100
+                        });
                 }
             }
         }
