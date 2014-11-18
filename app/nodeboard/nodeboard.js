@@ -94,15 +94,14 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     $scope.links = links;
                     $scope.position = {x:0,y:0};
 
-                    var $board = $(".board",element);
+                    var $board = $(element);
+
                     $board.bind('mousewheel', function(event) {
-                       if (event.originalEvent.wheelDelta>0) {
-                           $scope.zoomIn(1+0.05*event.originalEvent.wheelDelta/120);
-                           $scope.$apply();
-                       } else {
-                           $scope.zoomOut(1+0.05*(-event.originalEvent.wheelDelta)/120);
-                           $scope.$apply();
-                       }
+                        if (event.originalEvent.wheelDelta>0) {
+                            $scope.zoomIn(1+0.05*event.originalEvent.wheelDelta/120, {x:event.clientX, y:event.clientY});
+                        } else {
+                           $scope.zoomOut(1-0.05*(-event.originalEvent.wheelDelta)/120, {x:event.clientX, y:event.clientY});
+                        }
                     });
                     var leftTopPoint = {x:$board.offset().left, y: $board.offset().top};
 
@@ -112,13 +111,21 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     $scope.removeLink = function (linkId) {
                         //$scope.links
                     }
-                    $scope.zoomIn = function (val) {
-                        if (val==undefined) val = 1.1;
+                    function _zoom(val, zoomTo) {
+                        if (zoomTo == undefined) {
+                            zoomTo = {x:$(element).width()/2,y:$(element).height()/2}
+                        }
+                        $scope.position.x += -zoomTo.x * ( val - 1 ) / $scope.scale;
+                        $scope.position.y += -zoomTo.y * ( val - 1 ) / $scope.scale;
                         $scope.scale = $scope.scale * val;
                     }
-                    $scope.zoomOut = function (val) {
+                    $scope.zoomIn = function (val, zoomTo) {
                         if (val==undefined) val = 1.1;
-                        $scope.scale = $scope.scale / val;
+                        _zoom(val,zoomTo);
+                    }
+                    $scope.zoomOut = function (val, zoomTo) {
+                        if (val==undefined) val = 0.9;
+                        _zoom(val,zoomTo);
                     }
                     // svgRoot =
                     $scope.convertPointClientToBoard = function (clientX,clientY) {
@@ -144,7 +151,7 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                             }
                         })
                         .inertia({
-                            esistance     : 100
+                            resistance : 20
                         });
                 }
             }

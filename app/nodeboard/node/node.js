@@ -26,7 +26,9 @@ angular.module('SpreadsheedFlow.Nodeboard')
                                 //console.log('endDrag', event);
                             }
                         })
-                        .inertia(true);
+                        .inertia({
+                            resistance : 20
+                        });
 
                     scope.$watch("node", function (value) {
                         setTimeout(function () {
