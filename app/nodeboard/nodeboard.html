@@ -52,6 +52,12 @@
     </svg>
 </div>
 <div class="controls">
-    <div class="button icon" ng-click="zoomIn()" data-title="test" bs-tooltip="tooltip">+</div>
-    <div class="button icon" ng-click="zoomOut()">-</div>
+    <div class="btn-group">
+        <label class="btn btn-success" ng-click="zoomIn()">
+            <span class="glyphicon glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+        </label>
+        <label class="btn btn-success" ng-click="zoomOut()">
+            <span class="glyphicon glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
+        </label>
+    </div>
 </div>

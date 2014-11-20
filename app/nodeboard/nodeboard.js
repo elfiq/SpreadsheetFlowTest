@@ -122,8 +122,10 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     });
 
                     $board.bind('mousewheel', function (evt) {
-                        var zoomDelta = evt.originalEvent.wheelDelta/120/30;
+                        evt.preventDefault();
+                        var zoomDelta = evt.deltaY/300;
                         _zoom(zoomDelta, {x:evt.pageX-leftTopPoint.x,y:evt.pageY-leftTopPoint.y});
+                        return false;
                     });
 
                     function _zoom(zoomDelta, zoomTo) {

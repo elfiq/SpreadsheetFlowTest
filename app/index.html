@@ -12,27 +12,29 @@
   <link rel="stylesheet" href="nodeboard/nodeboard.css">
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#" onclick="addRandomNode(); return false">Add Node</a></li>
-    <li><a href="#" onclick="addRandomLink(); return false">Random link</a></li>
-    <li><a href="#" onclick="clearNodes(); return false">Clear</a></li>
-  </ul>
+    <div class="btn-group">
+        <label class="btn btn-success" onclick="addRandomNode()">Random node</label>
+        <label class="btn btn-success" onclick="addRandomLink()">Random link</label>
+    </div>
+    <div class="btn-group">
+        <label class="btn btn-success" onclick="clearNodes()">Clear</label>
+    </div>
 
-  <div id="view" data-sf-nodeboard=""></div>
-  
-  <script src="bower_components/underscore/underscore-min.js"></script>
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-  <script src="http://code.interactjs.io/interact-1.1.2.min.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/ui-bootstrap/dist/ui-bootstrap-0.11.2.min.js"></script>
-  <script src="bower_components/ui-bootstrap/dist/ui-bootstrap-tpls-0.11.2.min.js"></script>
-  <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
+    <div id="view" data-sf-nodeboard=""></div>
 
-  <script src="app.js"></script>
-  <script src="nodeboard/nodeboard.js"></script>
-  <script src="nodeboard/node/node.js"></script>
-  <script src="nodeboard/link/link.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="http://code.interactjs.io/interact-1.1.2.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/ui-bootstrap/dist/ui-bootstrap-0.11.2.min.js"></script>
+    <script src="bower_components/ui-bootstrap/dist/ui-bootstrap-tpls-0.11.2.min.js"></script>
+    <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
+    <script src="bower_components/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="nodeboard/nodeboard.js"></script>
+    <script src="nodeboard/node/node.js"></script>
+    <script src="nodeboard/link/link.js"></script>
 </body>
 </html>
