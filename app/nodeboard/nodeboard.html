@@ -11,8 +11,8 @@
 	        </filter>
 	    </defs>
         <rect width="100%" height="100%" fill="#f9f9f9"></rect>
-        <g class="board" ng-attr-transform="translate({{position.x}},{{position.y}}) scale({{scale}},{{scale}})">
-            <rect class="boardDragItem" width="100%" height="100%" fill="#d9d9d9" ng-attr-transform="translate({{(-position.x)/scale}},{{(-position.y)/scale}}) scale({{1/scale}},{{1/scale}})"></rect>
+        <g class="board viewport" data-ng-attr-transform="translate({{position.x}},{{position.y}}) scale({{scale}})">
+            <rect class="boardDragItem" width="100%" height="100%" fill="#f9f9f9"></rect>
         	<!-- нельзя вынести в отдельный шаблон, т.к. ангуляр пока плохо вставляет внутренние svg элементы -->
             <g id="link_{{link.id}}" class="link {{link.className}}"
             	data-sf-link=""
