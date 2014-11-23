@@ -21,12 +21,16 @@ angular.module('SpreadsheedFlow.Nodeboard')
                         var start = scope.$parent.convertPointClientToBoard($fromSlot.left+$fromSlot.width/2, $fromSlot.top+$fromSlot.height);
                         var end = scope.$parent.convertPointClientToBoard($toSlot.left+$toSlot.width/2, $toSlot.top);
                         $el.find('path').attr('d',"M "+start.x+" "+start.y+" Q "+(start.x)+" "+(start.y+10)+" "+(start.x+end.x)/2+" "+(start.y+end.y)/2+" Q "+end.x+" "+(end.y-10)+" "+end.x+" "+end.y);
+
                     }
                     scope.$on("nodePositionChange:"+scope.link.fromNodeId, refresh);
                     scope.$on("nodePositionChange:"+scope.link.toNodeId, refresh);
+                    scope.$on("slotPositionChange:"+scope.link.toSlotId, refresh);
+                    scope.$on("slotPositionChange:"+scope.link.fromSlotId, refresh);
                     scope.$watch("nodes", function(value) {
                         refresh();
                     });
+
                     refresh();
                 }
             }

@@ -18,8 +18,9 @@
             	data-sf-link=""
             	data-ng-animate="'animate'" 
             	data-ng-repeat="link in links">
-            	<path ng-attr-id="link-{{link.id}}" stroke="#777" fill="none"></path>
+            	<path stroke="#777" fill="none"></path>
             </g>
+            <path ng-if="addLinkState==1" id="link_new" stroke="#777" fill="none"></path>
         	<!-- нельзя вынести в отдельный шаблон, т.к. ангуляр пока плохо вставляет внутренние svg элементы -->
             <g id="node_{{node.id}}" class="node {{node.className}} show-node"
             	data-sf-node=""
@@ -36,11 +37,12 @@
 				            <circle class="slotBack" r="10"></circle>
 				            <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
 				        </g>
-				        <g id="slot_{{slot.id}}" class="slot outgoing slot_{{index}}"
+				        <g id="slot_{{slot.id}}" sf-outgoing-slot="" class="slot outgoing slot_{{index}}"
 				        	data-ng-repeat="(index,slot) in node.outgoingSlots"
 				        	tooltip-placement="bottom"
 				        	tooltip-append-to-body="true"
-				        	tooltip="{{slot.title}}">
+				        	tooltip="{{slot.title}}"
+                            data-ng-attr-transform="translate({{position.x}},{{position.y}})">
 				            <circle class="slotBack" r="10"></circle>
 				            <path class="slotArrow" d="M 0 5 l 4 -4 l -8 0 l 4 4"></path>
 				        </g>
@@ -48,6 +50,12 @@
 				    </g>
 				    <text class="title" font-size="18">{{node.title}}</text>
 				</g>
+            </g>
+            <g id="slot_new" class="slot incoming"
+               ng-if="addLinkState==1"
+               data-ng-attr-transform="translate({{newSlotPosition.x}},{{newSlotPosition.y}})">
+                <circle class="slotBack" r="10"></circle>
+                <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
             </g>
         </g>
     </svg>

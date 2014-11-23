@@ -19,8 +19,11 @@
 	fill:rgba(255,255,255,0.5);
 	stroke:none;
 }
+.node .slot.dragEnter{
+    transform:scale(1.1,1.1)
+}
 
-/*.node.ng-enter, .node.ng-leave{
+.node.ng-enter, .node.ng-leave{
 	-webkit-transition:0.5s ease-in-out all;
 	-moz-transition:all 0.5s ease-in-out;
 	-o-transition:0.5s ease-in-out all;
@@ -75,4 +78,3 @@
 	stroke:#000;
 	transform:scale(1.05,1.05);
 }
-*/

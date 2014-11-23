@@ -45,13 +45,12 @@ angular.module('SpreadsheedFlow.Nodeboard')
                             for (i=0;i<cnt;i++) {
                                 ingoingSlots.eq(i).scope().position = {x:(i*25-(cnt-1)/2*25), y:(-h/2-7)};
                                 ingoingSlots.eq(i).scope().$apply();
-
-                                //ingoingSlots.eq(i).attr('transform',"translate("+(i*25-(cnt-1)/2*25)+","+(-h/2-7)+")");
                             }
                             var outgoingSlots = $el.find(".outgoing");
                             cnt = outgoingSlots.length;
                             for (i=0;i<cnt;i++) {
-                                outgoingSlots.eq(i).attr('transform',"translate("+(i*25-(cnt-1)/2*25)+","+(h/2+7)+")");
+                                outgoingSlots.eq(i).scope().position = {x:(i*25-(cnt-1)/2*25), y:h/2+7};
+                                outgoingSlots.eq(i).scope().$apply();
                             }
                             $timeout(function () { scope.$parent.$broadcast("nodePositionChange:"+scope.node.id); },0);
                         },100);
@@ -60,55 +59,6 @@ angular.module('SpreadsheedFlow.Nodeboard')
                 return linkFunction;
             }
         };
-    }])
-    .directive("sfIngoingSlot", ['$timeout', function ($timeout) {
-        console.log('ererer');
-        return {
-            compile: function (element, attrs) {
-                console.log('erere');
-                return function (scope, element, attrs) {
-                    var $el = $(element);
-
-                    var disconnect = function () {
-
-                    }
-                    var startPos = {x:0,y:0};
-                    interact($el[0])
-                        .draggable({
-                            onstart:function () {
-                                console.log('start');
-                                startPos.x = scope.position.x;
-                                startPos.y = scope.position.y;
-                            },
-                            onmove:function (event) {
-                                console.log(event);
-                                var distance = scope.$parent.convertDistanceClientToBoard(event.clientX - event.clientX0,event.clientY - event.clientY0);
-                                scope.position.x = startPos.x + distance.x/3;
-                                scope.position.y = startPos.y + distance.y/3;
-                                scope.$apply();
-                                if (Math.abs(scope.position.x - startPos.x) + Math.abs(scope.position.y - startPos.y)<10) {
-
-                                }
-                                if (event.duration>500) {
-                                    event.interaction.stop(event);
-                                    scope.position.x = startPos.x;
-                                    scope.position.y = startPos.y;
-                                    scope.$apply();
-                                }
-                            },
-                            onend: function (event) {
-                                if (Math.abs(scope.position.x - startPos.x) + Math.abs(scope.position.y - startPos.y)<10) {
-
-                                }
-                                scope.position.x = startPos.x;
-                                scope.position.y = startPos.y;
-                                scope.$apply();
-                            }
-                        })
-
-                }
-            }
-        }
     }])
     .animation(".show-node", function () {
         return {

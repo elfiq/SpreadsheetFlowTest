@@ -79,9 +79,10 @@ function fillRandomData() {
     addRandomLink(true);
     addRandomLink(true);
 }
+
 angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
    
-    .directive('sfNodeboard', function () {
+    .directive('sfNodeboard', ['sfData', function (sfData) {
         return {
             templateUrl: function(elem, attr) {
                 return 'nodeboard/nodeboard.html'
@@ -91,8 +92,10 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     fillRandomData();
                     $scope.scale = 1;
                     $scope.position = {x:300,y:300};
-                    $scope.nodes = nodes;
-                    $scope.links = links;
+                    $scope.newSlotPosition = {x:0,y:0};
+                    $scope.nodes = sfData.getNodes();
+                    $scope.links = sfData.getLinks();
+                    $scope.addLinkState = 0;
 
                     var $board = $(element),
                         $root = $(".nodeboard",element),
@@ -100,7 +103,8 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
 
                     var panZoom = svgPanZoom($root[0], {
                         panEnabled: false,
-                        zoomEnabled: false
+                        zoomEnabled: false,
+                        dblClickZoomEnabled: false
                     });
 
                     panZoom.setOnZoom(function (val) {
@@ -184,4 +188,4 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                 }
             }
         }
-    });
+    }]);
