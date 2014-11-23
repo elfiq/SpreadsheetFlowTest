@@ -9,10 +9,13 @@
 .node {
     cursor:pointer;
 }
+.node .title {
+    user-select: none;
+}
 .node .slot:hover {
     fill:#000;
 }
-.node:hover .background {
+.node:hover .background .rect{
 	stroke:#c9c9c9;
 }
 .node .slotArrow {
@@ -20,48 +23,52 @@
 	stroke:none;
 }
 .node .slot.dragEnter{
-    transform:scale(1.1,1.1)
+    stroke:#000;
+}
+.node.selected {
+    stroke:#c9c9c9;
+    stroke-width:2px;
 }
 
 .node.ng-enter, .node.ng-leave{
-	-webkit-transition:0.5s ease-in-out all;
-	-moz-transition:all 0.5s ease-in-out;
-	-o-transition:0.5s ease-in-out all;
-	transition:0.5s ease-in-out all;
+	-webkit-transition:0.3s ease-in-out all;
+	-moz-transition:all 0.3s ease-in-out;
+	-o-transition:0.3s ease-in-out all;
+	transition:0.3s ease-in-out all;
 }
 .node.ng-enter{
-	-webkit-transition:0.5s ease-in-out all;
-	-moz-transition:0.5s ease-in-out all;
-	-o-transition:0.5s ease-in-out all;
-	transition:0.5s ease-in-out all;
+	-webkit-transition:0.3s ease-in-out all;
+	-moz-transition:0.3s ease-in-out all;
+	-o-transition:0.3s ease-in-out all;
+	transition:0.3s ease-in-out all;
 	opacity:0;
 }
 .node.ng-enter.ng-enter-active{
-	-webkit-transition:0.5s ease-in-out all;
-	-moz-transition:0.5s ease-in-out all;
-	-o-transition:0.5s ease-in-out all;
-	transition:0.5s ease-in-out all;
+	-webkit-transition:0.3s ease-in-out all;
+	-moz-transition:0.3s ease-in-out all;
+	-o-transition:0.3s ease-in-out all;
+	transition:0.3s ease-in-out all;
 	opacity:1;
 }
 .node.ng-leave{
-	-webkit-transition:0.5s ease-in-out all;
-	-moz-transition:0.5s ease-in-out all;
-	-o-transition:0.5s ease-in-out all;
-	transition:0.5s ease-in-out all;
+	-webkit-transition:0.3s ease-in-out all;
+	-moz-transition:0.3s ease-in-out all;
+	-o-transition:0.3s ease-in-out all;
+	transition:0.3s ease-in-out all;
 	opacity:1;
 }
 .node.ng-leave.ng-leave-active{
-	-webkit-transition:0.5s ease-in-out all;
-	-moz-transition:0.5s ease-in-out all;
-	-o-transition:0.5s ease-in-out all;
-	transition:0.5s ease-in-out all;
+	-webkit-transition:0.3s ease-in-out all;
+	-moz-transition:0.3s ease-in-out all;
+	-o-transition:0.3s ease-in-out all;
+	transition:0.3s ease-in-out all;
 	opacity:0;
 }
 .node .innerWrap{
-	-webkit-transition:0.5s ease-in-out all;
-	-moz-transition:0.5s ease-in-out all;
-	-o-transition:0.5s ease-in-out all;
-	transition:0.5s ease-in-out all;
+	-webkit-transition:0.3s ease-in-out all;
+	-moz-transition:0.3s ease-in-out all;
+	-o-transition:0.3s ease-in-out all;
+	transition:0.3s ease-in-out all;
 	-moz-transform:scale(1,1);
 	transform:scale(1,1);
 }
@@ -75,6 +82,5 @@
 	transform:scale(0.9,0.9);
 }
 .node:hover .innerWrap,.node:active .innerWrap{
-	stroke:#000;
 	transform:scale(1.05,1.05);
 }

@@ -52,21 +52,17 @@ angular.module('SpreadsheedFlow.Nodeboard')
                         .dropzone({
                             accept:".outgoing",
                             ondragenter:function (event){
-                                $(element).addClass("dragEnter");
+                                $el[0].classList.add("dragEnter");
+                            },
+                            ondragleave:function(event) {
+                                $el[0].classList.remove("dragEnter");
                             },
                             ondrop:function(event) {
-                                console.log(event);
+                                $el[0].classList.remove("dragEnter");
                                 var fromSlot = $(event.relatedTarget).scope().slot;
                                 var fromNode = $(event.relatedTarget).scope().node;
-                                console.log(fromSlot, fromNode);
                                 var toSlot = scope.slot;
-                                var link = {
-                                    fromSlotId:fromSlot.id,
-                                    fromNodeId:fromNode.id,
-                                    toSlotId:scope.slot.id,
-                                    toNodeId:scope.node.id,
-                                    id:100
-                                }
+                                var link = sfData.newLink(fromNode.id,fromSlot.id,scope.node.id,toSlot.id);
                                 scope.links.push(link);
                             }
                         })

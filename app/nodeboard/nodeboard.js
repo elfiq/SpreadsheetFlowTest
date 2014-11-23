@@ -125,11 +125,18 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                         }
                     });
 
-                    $board.bind('mousewheel', function (evt) {
-                        evt.preventDefault();
-                        var zoomDelta = evt.deltaY/300;
-                        _zoom(zoomDelta, {x:evt.pageX-leftTopPoint.x,y:evt.pageY-leftTopPoint.y});
-                        return false;
+                    $board.bind({
+                        'mousewheel': function (evt) {
+                            evt.preventDefault();
+                            var zoomDelta = evt.deltaY / 300;
+                            _zoom(zoomDelta, {x: evt.pageX - leftTopPoint.x, y: evt.pageY - leftTopPoint.y});
+                            return false;
+                        },
+                        'click':function (evt) {
+                            $(".node.selected",$board).each(function () {
+                                this.classList.remove('selected');
+                            });
+                        }
                     });
 
                     function _zoom(zoomDelta, zoomTo) {
@@ -160,6 +167,12 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                         if (val==undefined) val = -0.1;
                         _zoom(val);
                     }
+                    $scope.removeSelection = function() {
+                        $(".node.selected",$board).each(function () {
+                            sfData.removeNodes($(this).scope().node);
+                        });
+                    }
+
                     $scope.convertPointClientToBoard = function (clientX,clientY) {
                         return {
                             x:(clientX-leftTopPoint.x-$scope.position.x)/$scope.scale,

@@ -15,7 +15,12 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     removeNodes = [removeNodes];
                 }
                 var ind;
+                var that = this;
                 _(removeNodes).each(function(node) {
+                    var removeLinks = that.getLinksWhere({toNodeId:node.id});
+                    that.removeLinks(removeLinks);
+                    removeLinks = that.getLinksWhere({fromNodeId:node.id});
+                    that.removeLinks(removeLinks);
                     ind = nodes.indexOf(node);
                     if (ind<0) return;
                     nodes.splice(ind,1);
@@ -41,6 +46,22 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     if (ind<0) return;
                     links.splice(ind,1);
                 })
+            },
+            newLink:function(fromNodeId,fromSlotId,toNodeId,toSlotId) {
+                var maxId = 0;
+                if (links.length) {
+                    maxId = _.max(links, function (item) {
+                        return item.id
+                    }).id;
+                }
+                return {
+                    fromSlotId:fromSlotId,
+                    fromNodeId:fromNodeId,
+                    toSlotId:toSlotId,
+                    toNodeId:toNodeId,
+                    id:maxId+1
+                }
+
             }
         }
         return service;

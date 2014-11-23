@@ -9,16 +9,38 @@ angular.module('SpreadsheedFlow.Nodeboard')
                 var linkFunction = function(scope, element, attrs) {
                     var $el = $(element);
                     var startDragPoint = {x:0,y:0};
+                    $el.bind({
+                        'mousedown':function (event) {
+                            $el.parent().append( $el );
+                            if ($el[0].classList.contains('selected')) {
+                                return;
+                            }
+                            if (!event.shiftKey && !event.ctrlKey) {
+                                $(".node.selected",$el.parent()).each(function () {
+                                    this.classList.remove('selected');
+                                });
+                            }
+                            $el[0].classList.add('selected');
+                            event.bubbles = false;// что б парент не схватил событие
+                            event.originalEvent.cancelBubble = true;// что б парент не схватил событие
+                        },
+                        'click':function(event) {
+                            event.bubbles = false;// что б парент не схватил событие
+                            event.originalEvent.cancelBubble = true;// что б парент не схватил событие
+                        }
+                    });
                     interact($el[0])
                         .draggable({
                             onstart: function (event) {
-                                $el.parent().append( $el );
                                 startDragPoint = {x:scope.node.x,y:scope.node.y};
                             },
                             onmove : function (event) {
-                                var translatedPoint = scope.$parent.convertDistanceClientToBoard(event.clientX - event.clientX0,event.clientY - event.clientY0);
-                                scope.node.x = startDragPoint.x + translatedPoint.x;
-                                scope.node.y = startDragPoint.y + translatedPoint.y;
+                                var translatedPoint = scope.$parent.convertDistanceClientToBoard(event.dx,event.dy);
+                                $(".node.selected",$el.parent()).each(function () {
+                                    var scope = $(this).scope();
+                                    scope.node.x = scope.node.x + translatedPoint.x;
+                                    scope.node.y = scope.node.y + translatedPoint.y;
+                                });
                                 scope.$apply();
                             },
                             onend  : function (event) {
