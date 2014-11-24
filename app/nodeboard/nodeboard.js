@@ -95,7 +95,8 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     $scope.newSlotPosition = {x:0,y:0};
                     $scope.nodes = sfData.getNodes();
                     $scope.links = sfData.getLinks();
-                    $scope.addLinkState = 0;
+                    $scope.watchers = sfData.getWatchers(); // свойства этого объекта меняются при изменении элементов
+                    $scope.addLinkState = 0; // при добавлении связи - появляются доп. элементы
 
                     var $board = $(element),
                         $root = $(".nodeboard",element),

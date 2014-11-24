@@ -25,6 +25,9 @@
 .node .slot.dragEnter{
     stroke:#000;
 }
+.node .slot .slotEmpty {
+    fill:#fff;
+}
 .node.selected {
     stroke:#c9c9c9;
     stroke-width:2px;

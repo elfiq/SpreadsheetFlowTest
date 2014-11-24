@@ -12,6 +12,10 @@ angular.module('SpreadsheedFlow.Nodeboard')
                         var links = sfData.getLinksWhere({toSlotId:scope.slot.id});
                         sfData.removeLinks(links);
                     }
+                    scope.$watch('watchers.links', function(value) {
+                        scope.isEmpty = sfData.getLinksWhere({toSlotId:scope.slot.id}).length == 0;
+                    })
+                    scope.isEmpty = sfData.getLinksWhere({toSlotId:scope.slot.id}).length == 0;
                     var startPos = {x:0,y:0};
                     var unlinkDistance = 20;
                     interact($el[0])
@@ -63,7 +67,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
                                 var fromNode = $(event.relatedTarget).scope().node;
                                 var toSlot = scope.slot;
                                 var link = sfData.newLink(fromNode.id,fromSlot.id,scope.node.id,toSlot.id);
-                                scope.links.push(link);
+                                sfData.addLink(link);
                             }
                         })
 

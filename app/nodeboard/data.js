@@ -3,12 +3,18 @@
  */
 angular.module('SpreadsheedFlow.Nodeboard')
     .factory('sfData', function () {
+        var watchers = {
+            links:0,
+            nodes:0
+        };
         var service = {
             getNodes:function () {
                 return nodes;
             },
             addNode:function(node) {
                 nodes.push(node);
+                watchers.nodes++;
+                return true;
             },
             removeNodes:function(removeNodes) {
                 if (!$.isArray(removeNodes)) {
@@ -24,7 +30,9 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     ind = nodes.indexOf(node);
                     if (ind<0) return;
                     nodes.splice(ind,1);
-                })
+                });
+                watchers.nodes++;
+                return true;
             },
             getLinks:function () {
                 return links;
@@ -34,6 +42,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
             },
             addLink:function(link) {
                 links.push(link);
+                watchers.links++;
                 return true;
             },
             removeLinks:function(removeLinks) {
@@ -45,7 +54,9 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     ind = links.indexOf(link);
                     if (ind<0) return;
                     links.splice(ind,1);
-                })
+                });
+                watchers.links++;
+                return true;
             },
             newLink:function(fromNodeId,fromSlotId,toNodeId,toSlotId) {
                 var maxId = 0;
@@ -62,6 +73,9 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     id:maxId+1
                 }
 
+            },
+            getWatchers:function() {
+                return watchers;
             }
         }
         return service;

@@ -27,7 +27,7 @@ angular.module('SpreadsheedFlow.Nodeboard')
                     scope.$on("nodePositionChange:"+scope.link.toNodeId, refresh);
                     scope.$on("slotPositionChange:"+scope.link.toSlotId, refresh);
                     scope.$on("slotPositionChange:"+scope.link.fromSlotId, refresh);
-                    scope.$watch("nodes", function(value) {
+                    scope.$watch("watchers.nodes", function(value) {
                         refresh();
                     });
 

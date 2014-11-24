@@ -29,22 +29,25 @@
             	data-ng-repeat="node in nodes">
             	<g class="innerWrap">
 				    <g class="background" filter="url(#shadowfilter)">
-				        <g id="slot_{{slot.id}}" sf-ingoing-slot="" class="slot ingoing slot_{{index}}"
-				        	data-ng-repeat="(index,slot) in node.ingoingSlots"
-				        	tooltip-append-to-body="true"
-				        	tooltip="{{slot.title}}"
-                            data-ng-attr-transform="translate({{position.x}},{{position.y}})">
-				            <circle class="slotBack" r="10"></circle>
-				            <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
+				        <g sf-ingoing-slot="" id="slot_{{slot.id}}"
+                           class="slot ingoing slot_{{index}}"
+                           data-ng-repeat="(index,slot) in node.ingoingSlots"
+                           tooltip-append-to-body="true"
+                           tooltip="{{slot.title}}"
+                           data-ng-attr-transform="translate({{position.x}},{{position.y}})">
+                            <circle class="slotBack" r="10"></circle>
+                            <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
+                            <circle ng-if="isEmpty" class="slotEmpty" r="8"></circle>
 				        </g>
-				        <g id="slot_{{slot.id}}" sf-outgoing-slot="" class="slot outgoing slot_{{index}}"
-				        	data-ng-repeat="(index,slot) in node.outgoingSlots"
-				        	tooltip-placement="bottom"
-				        	tooltip-append-to-body="true"
-				        	tooltip="{{slot.title}}"
-                            data-ng-attr-transform="translate({{position.x}},{{position.y}})">
-				            <circle class="slotBack" r="10"></circle>
-				            <path class="slotArrow" d="M 0 5 l 4 -4 l -8 0 l 4 4"></path>
+				        <g sf-outgoing-slot="" id="slot_{{slot.id}}"
+                           class="slot outgoing slot_{{index}}"
+                           data-ng-repeat="(index,slot) in node.outgoingSlots"
+                           tooltip-placement="bottom"
+                           tooltip-append-to-body="true"
+                           tooltip="{{slot.title}}"
+                           data-ng-attr-transform="translate({{position.x}},{{position.y}})">
+                            <circle class="slotBack" r="10"></circle>
+                            <path class="slotArrow" d="M 0 5 l 4 -4 l -8 0 l 4 4"></path>
 				        </g>
 				        <rect class="rect" rx="4" ry="4"></rect>
 				    </g>
