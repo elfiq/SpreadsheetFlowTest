@@ -2,8 +2,8 @@
  * Created by rodion on 23.10.14.
  */
 'use strict';
-angular.module('SpreadsheedFlow.Nodeboard')
-    .directive('sfNode',['$timeout','$animate',function ($timeout,$animate) {
+angular.module('Nodeboard')
+    .directive('nbNode',['$timeout','$animate',function ($timeout,$animate) {
         return {
             compile:function(element, attrs) {
                 var linkFunction = function(scope, element, attrs) {

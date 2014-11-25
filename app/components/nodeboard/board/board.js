@@ -1,101 +1,22 @@
 /**
  * Created by rodion on 22.10.14.
  */
-'use strict';
-var nodes = [];
-var links = [];
-var randNodeId = 0;
-var randSlotId = 0;
-var randLinkId = 0;
-function addRandomNode(instant) {
-    randNodeId ++;
-    var node = {
-        id:randNodeId,
-        title:'Node Number #'+randNodeId,
-        x:Math.round(Math.random()*$(".nodeboard").width()),
-        y:Math.round(Math.random()*$(".nodeboard").height()),
-        className:"style"+Math.round(Math.random()*5),
-        ingoingSlots:[],
-        outgoingSlots:[]
-    }
-    var inSlotsCount = Math.round(Math.random()*3)+1;
-    for (var i=0;i<inSlotsCount;i++) {
-        randSlotId++;
-        node.ingoingSlots.push({
-            id:randSlotId,
-            title:'slot'+randSlotId
-        });
-    }
-    randSlotId++;
-    node.outgoingSlots.push({
-        id:randSlotId,
-        title:'slot'+randSlotId
-    });
-    if (instant) {
-        nodes.push(node);
-    } else {
-        $("#view").scope().$apply(function (scope) {
-            nodes.push(node);
-        });
-    }
-}
-function addRandomLink(instant) {
-    randLinkId++;
-    var fromNodeInd = Math.floor(Math.random()*nodes.length);
-    var toNodeInd = Math.floor(Math.random()*nodes.length);
-    if (toNodeInd == fromNodeInd) return false;
-    var toSlotInd = Math.floor(Math.random()*nodes[toNodeInd].ingoingSlots.length);
-    if (_(links).findWhere({
-        fromNodeId:nodes[fromNodeInd].id,
-        toNodeId:nodes[toNodeInd].id,
-        toSlotId:nodes[toNodeInd].ingoingSlots[toSlotInd].id
-    })) return false;
-    var link = {
-        id:randLinkId,
-        fromNodeId:nodes[fromNodeInd].id,
-        fromSlotId:nodes[fromNodeInd].outgoingSlots[0].id,
-        toNodeId:nodes[toNodeInd].id,
-        toSlotId:nodes[toNodeInd].ingoingSlots[toSlotInd].id
-    }
-    if (instant) {
-        links.push(link);
-    } else {
-        $("#view").scope().$apply(function (scope) {
-            links.push(link);
-        });
-    }
-}
-function clearNodes() {
-    $("#view").scope().$apply(function (scope) {
-        links.length = 0;
-        nodes.length = 0;
-    });
-}
-function fillRandomData() {
-    addRandomNode(true);
-    addRandomNode(true);
-    addRandomNode(true);
-    addRandomLink(true);
-    addRandomLink(true);
-    addRandomLink(true);
-}
 
-angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
-   
-    .directive('sfNodeboard', ['sfData', function (sfData) {
+angular.module('Nodeboard', ['ngAnimate'])
+    .directive('nbBoard', ['nbData', function (nbData) {
         return {
             templateUrl: function(elem, attr) {
-                return 'nodeboard/nodeboard.html'
+                return 'components/nodeboard/board/board.html'
             },
             compile:function(element, attrs) {
                 return function ($scope, element, attrs) {
-                    fillRandomData();
+                    nbData.fillRandomData();
                     $scope.scale = 1;
                     $scope.position = {x:300,y:300};
                     $scope.newSlotPosition = {x:0,y:0};
-                    $scope.nodes = sfData.getNodes();
-                    $scope.links = sfData.getLinks();
-                    $scope.watchers = sfData.getWatchers(); // свойства этого объекта меняются при изменении элементов
+                    $scope.nodes = nbData.getNodes();
+                    $scope.links = nbData.getLinks();
+                    $scope.watchers = nbData.getWatchers(); // свойства этого объекта меняются при изменении элементов
                     $scope.addLinkState = 0; // при добавлении связи - появляются доп. элементы
 
                     var $board = $(element),
@@ -170,7 +91,7 @@ angular.module('SpreadsheedFlow.Nodeboard', ['ngAnimate'])
                     }
                     $scope.removeSelection = function() {
                         $(".node.selected",$board).each(function () {
-                            sfData.removeNodes($(this).scope().node);
+                            nbData.removeNodes($(this).scope().node);
                         });
                     }
 

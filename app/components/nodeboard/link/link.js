@@ -2,8 +2,8 @@
  * Created by rodion on 23.10.14.
  */
 'use strict';
-angular.module('SpreadsheedFlow.Nodeboard')
-    .directive('sfLink', function () {
+angular.module('Nodeboard')
+    .directive('nbLink', function () {
         return {
             compile:function(element, attrs) {
                 return function (scope, element, attrs) {

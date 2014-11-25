@@ -1,0 +1,13 @@
+.node .slot:hover {
+    fill:#000;
+}
+.node .slotArrow {
+    fill:rgba(255,255,255,0.5);
+    stroke:none;
+}
+.node .slot.dragEnter{
+    stroke:#000;
+}
+.node .slot .slotEmpty {
+    fill:#fff;
+}

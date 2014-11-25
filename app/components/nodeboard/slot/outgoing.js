@@ -2,8 +2,8 @@
  * Created by rodion on 22.11.14.
  */
 'use strict';
-angular.module('SpreadsheedFlow.Nodeboard')
-    .directive("sfOutgoingSlot", ['$timeout', function ($timeout) {
+angular.module('Nodeboard')
+    .directive("nbOutgoingSlot", ['$timeout', function ($timeout) {
         return {
             compile: function (element, attrs) {
                 return function (scope, element, attrs) {

@@ -2,20 +2,20 @@
  * Created by rodion on 22.11.14.
  */
 'use strict';
-angular.module('SpreadsheedFlow.Nodeboard')
-    .directive("sfIngoingSlot", ['$timeout','sfData', function ($timeout,sfData) {
+angular.module('Nodeboard')
+    .directive("nbIngoingSlot", ['$timeout','nbData', function ($timeout,nbData) {
         return {
             compile: function (element, attrs) {
                 return function (scope, element, attrs) {
                     var $el = $(element);
                     var disconnect = function () {
-                        var links = sfData.getLinksWhere({toSlotId:scope.slot.id});
-                        sfData.removeLinks(links);
+                        var links = nbData.getLinksWhere({toSlotId:scope.slot.id});
+                        nbData.removeLinks(links);
                     }
                     scope.$watch('watchers.links', function(value) {
-                        scope.isEmpty = sfData.getLinksWhere({toSlotId:scope.slot.id}).length == 0;
+                        scope.isEmpty = nbData.getLinksWhere({toSlotId:scope.slot.id}).length == 0;
                     })
-                    scope.isEmpty = sfData.getLinksWhere({toSlotId:scope.slot.id}).length == 0;
+                    scope.isEmpty = nbData.getLinksWhere({toSlotId:scope.slot.id}).length == 0;
                     var startPos = {x:0,y:0};
                     var unlinkDistance = 20;
                     interact($el[0])
@@ -66,8 +66,8 @@ angular.module('SpreadsheedFlow.Nodeboard')
                                 var fromSlot = $(event.relatedTarget).scope().slot;
                                 var fromNode = $(event.relatedTarget).scope().node;
                                 var toSlot = scope.slot;
-                                var link = sfData.newLink(fromNode.id,fromSlot.id,scope.node.id,toSlot.id);
-                                sfData.addLink(link);
+                                var link = nbData.newLink(fromNode.id,fromSlot.id,scope.node.id,toSlot.id);
+                                nbData.addLink(link);
                             }
                         })
 

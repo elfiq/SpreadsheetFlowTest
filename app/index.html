@@ -8,8 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="app.css">
-  <link rel="stylesheet" href="nodeboard/node/node.css">
-  <link rel="stylesheet" href="nodeboard/nodeboard.css">
+  <link rel="stylesheet" href="components/nodeboard/node/node.css">
+  <link rel="stylesheet" href="components/nodeboard/slot/slot.css">
+  <link rel="stylesheet" href="components/nodeboard/link/link.css">
+  <link rel="stylesheet" href="components/nodeboard/board/board.css">
 </head>
 <body>
     <div class="btn-group">
@@ -20,7 +22,7 @@
         <label class="btn btn-success" onclick="clearNodes()">Clear</label>
     </div>
 
-    <div id="view" data-sf-nodeboard=""></div>
+    <div id="view" data-nb-board=""></div>
 
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -32,13 +34,14 @@
     <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
     <script src="bower_components/jquery-mousewheel/jquery.mousewheel.min.js"></script>
 
+
+    <script src="components/nodeboard/board/board.js"></script>
+    <script src="components/nodeboard/data.js"></script>
+    <script src="components/nodeboard/node/node.js"></script>
+    <script src="components/nodeboard/link/link.js"></script>
+    <script src="components/nodeboard/slot/ingoing.js"></script>
+    <script src="components/nodeboard/slot/outgoing.js"></script>
     <script src="app.js"></script>
-    <script src="nodeboard/nodeboard.js"></script>
-    <script src="nodeboard/data.js"></script>
-    <script src="nodeboard/node/node.js"></script>
-    <script src="nodeboard/link/link.js"></script>
-    <script src="nodeboard/slot/ingoing.js"></script>
-    <script src="nodeboard/slot/outgoing.js"></script>
 
 </body>
 </html>

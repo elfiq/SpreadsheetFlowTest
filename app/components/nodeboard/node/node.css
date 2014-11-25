@@ -12,22 +12,11 @@
 .node .title {
     user-select: none;
 }
-.node .slot:hover {
-    fill:#000;
-}
+
 .node:hover .background .rect{
 	stroke:#c9c9c9;
 }
-.node .slotArrow {
-	fill:rgba(255,255,255,0.5);
-	stroke:none;
-}
-.node .slot.dragEnter{
-    stroke:#000;
-}
-.node .slot .slotEmpty {
-    fill:#fff;
-}
+
 .node.selected {
     stroke:#c9c9c9;
     stroke-width:2px;
