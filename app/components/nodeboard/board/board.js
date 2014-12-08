@@ -20,8 +20,8 @@ angular.module('Nodeboard', ['ngAnimate'])
                     $scope.addLinkState = 0; // при добавлении связи - появляются доп. элементы
 
                     var $board = $(element),
-                        $root = $(".nodeboard",element),
-                        leftTopPoint = {x:$board.offset().left, y: $board.offset().top};
+                        $root = $(".nodeboard",element);
+                        //leftTopPoint = {x:$board.offset().left, y: $board.offset().top};
 
                     var panZoom = svgPanZoom($root[0], {
                         panEnabled: false,
@@ -51,7 +51,7 @@ angular.module('Nodeboard', ['ngAnimate'])
                         'mousewheel': function (evt) {
                             evt.preventDefault();
                             var zoomDelta = evt.deltaY / 300;
-                            _zoom(zoomDelta, {x: evt.pageX - leftTopPoint.x, y: evt.pageY - leftTopPoint.y});
+                            _zoom(zoomDelta, {x: evt.pageX - $board.offset().left, y: evt.pageY - $board.offset().top});
                             return false;
                         },
                         'click':function (evt) {
@@ -97,8 +97,8 @@ angular.module('Nodeboard', ['ngAnimate'])
 
                     $scope.convertPointClientToBoard = function (clientX,clientY) {
                         return {
-                            x:(clientX-leftTopPoint.x-$scope.position.x)/$scope.scale,
-                            y:(clientY-leftTopPoint.y-$scope.position.y)/$scope.scale
+                            x:(clientX-$board.offset().left-$scope.position.x)/$scope.scale,
+                            y:(clientY-$board.offset().top-$scope.position.y)/$scope.scale
                         };
                     }
                     $scope.convertDistanceClientToBoard = function (clientWidth, clientHeight) {
