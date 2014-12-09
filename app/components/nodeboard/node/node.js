@@ -1,7 +1,7 @@
 /**
  * Created by rodion on 23.10.14.
  */
-'use strict';
+//'use strict';
 angular.module('Nodeboard')
     .directive('nbNode',['$timeout','$animate',function ($timeout,$animate) {
         return {

@@ -1,7 +1,7 @@
 /**
  * Created by rodion on 22.11.14.
  */
-'use strict';
+//'use strict';
 angular.module('Nodeboard')
     .directive("nbIngoingSlot", ['$timeout','nbData', function ($timeout,nbData) {
         return {
