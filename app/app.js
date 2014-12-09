@@ -3,6 +3,8 @@
 // Declare app level module which depends on views, and components
 angular.module('SpreadsheedFlow', [
   'Nodeboard',
+  'Spreadsheet',
   'ui.bootstrap',
-  'ngAnimate'
+  'ngAnimate',
+  'shagstrom.angular-split-pane'
 ]);

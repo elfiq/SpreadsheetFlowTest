@@ -21,5 +21,8 @@
     "underscore": "1.7.0",
     "svg-pan-zoom": "2.3.10",
     "jquery-mousewheel": "3.1.12",
+    "angular-split-pane":"0.1.1",
+    "handsontable":"0.12.2",
+    "angular-ui-handsontable":"0.4.0"
   }
 }

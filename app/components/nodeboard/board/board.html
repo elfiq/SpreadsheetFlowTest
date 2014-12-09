@@ -1,68 +1,66 @@
-<div>
-    <svg class="nodeboard"
-     xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     xmlns:ev="http://www.w3.org/2001/xml-events" width="100%" height="500" version="1.1">
-	    <defs>
-	        <filter id="shadowfilter" x="-20%" y="-20%" width="140%" height="140%">
-	            <feOffset result="offOut" in="SourceGraphic" dx="0" dy="2" />
-	            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
-	            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-	        </filter>
-	    </defs>
-        <rect width="100%" height="100%" fill="#f9f9f9"></rect>
-        <g class="board viewport" data-ng-attr-transform="translate({{position.x}},{{position.y}}) scale({{scale}})">
-            <rect class="boardDragItem" width="100%" height="100%" fill="#f9f9f9"></rect>
-        	<!-- нельзя вынести в отдельный шаблон, т.к. ангуляр пока плохо вставляет внутренние svg элементы -->
-            <g id="link_{{link.id}}" class="link {{link.className}}"
-            	data-nb-link=""
-            	data-ng-animate="'animate'" 
-            	data-ng-repeat="link in links">
-            	<path stroke="#777" fill="none"></path>
-            </g>
-            <path ng-if="addLinkState==1" id="link_new" stroke="#777" fill="none"></path>
-        	<!-- нельзя вынести в отдельный шаблон, т.к. ангуляр пока плохо вставляет внутренние svg элементы -->
-            <g id="node_{{node.id}}" class="node {{node.className}} show-node"
-            	data-nb-node=""
-            	data-ng-attr-transform="translate({{node.x}},{{node.y}})"
-            	data-ng-animate="'animate'"
-            	data-ng-repeat="node in nodes">
-            	<g class="innerWrap">
-				    <g class="background" filter="url(#shadowfilter)">
-				        <g nb-ingoing-slot="" id="slot_{{slot.id}}"
-                           class="slot ingoing slot_{{index}}"
-                           data-ng-repeat="(index,slot) in node.ingoingSlots"
-                           tooltip-append-to-body="true"
-                           tooltip="{{slot.title}}"
-                           data-ng-attr-transform="translate({{position.x}},{{position.y}})">
-                            <circle class="slotBack" r="10"></circle>
-                            <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
-                            <circle ng-if="isEmpty" class="slotEmpty" r="8"></circle>
-				        </g>
-				        <g nb-outgoing-slot="" id="slot_{{slot.id}}"
-                           class="slot outgoing slot_{{index}}"
-                           data-ng-repeat="(index,slot) in node.outgoingSlots"
-                           tooltip-placement="bottom"
-                           tooltip-append-to-body="true"
-                           tooltip="{{slot.title}}"
-                           data-ng-attr-transform="translate({{position.x}},{{position.y}})">
-                            <circle class="slotBack" r="10"></circle>
-                            <path class="slotArrow" d="M 0 5 l 4 -4 l -8 0 l 4 4"></path>
-				        </g>
-				        <rect class="rect" rx="4" ry="4"></rect>
-				    </g>
-				    <text class="title" font-size="18">{{node.title}}</text>
-				</g>
-            </g>
-            <g id="slot_new" class="slot incoming"
-               ng-if="addLinkState==1"
-               data-ng-attr-transform="translate({{newSlotPosition.x}},{{newSlotPosition.y}})">
-                <circle class="slotBack" r="10"></circle>
-                <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
+<svg class="nodeboard"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:ev="http://www.w3.org/2001/xml-events" width="100%" height="100%" version="1.1">
+    <defs>
+        <filter id="shadowfilter" x="-20%" y="-20%" width="140%" height="140%">
+            <feOffset result="offOut" in="SourceGraphic" dx="0" dy="2" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+        </filter>
+    </defs>
+    <rect width="100%" height="100%" fill="#f9f9f9"></rect>
+    <g class="board viewport" data-ng-attr-transform="translate({{position.x}},{{position.y}}) scale({{scale}})">
+        <rect class="boardDragItem" width="100%" height="100%" fill="#f9f9f9"></rect>
+        <!-- нельзя вынести в отдельный шаблон, т.к. ангуляр пока плохо вставляет внутренние svg элементы -->
+        <g id="link_{{link.id}}" class="link {{link.className}}"
+            data-nb-link=""
+            data-ng-animate="'animate'"
+            data-ng-repeat="link in links">
+            <path stroke="#777" fill="none"></path>
+        </g>
+        <path ng-if="addLinkState==1" id="link_new" stroke="#777" fill="none"></path>
+        <!-- нельзя вынести в отдельный шаблон, т.к. ангуляр пока плохо вставляет внутренние svg элементы -->
+        <g id="node_{{node.id}}" class="node {{node.className}} show-node"
+            data-nb-node=""
+            data-ng-attr-transform="translate({{node.x}},{{node.y}})"
+            data-ng-animate="'animate'"
+            data-ng-repeat="node in nodes">
+            <g class="innerWrap">
+                <g class="background" filter="url(#shadowfilter)">
+                    <g nb-ingoing-slot="" id="slot_{{slot.id}}"
+                       class="slot ingoing slot_{{index}}"
+                       data-ng-repeat="(index,slot) in node.ingoingSlots"
+                       tooltip-append-to-body="true"
+                       tooltip="{{slot.title}}"
+                       data-ng-attr-transform="translate({{position.x}},{{position.y}})">
+                        <circle class="slotBack" r="10"></circle>
+                        <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
+                        <circle ng-if="isEmpty" class="slotEmpty" r="8"></circle>
+                    </g>
+                    <g nb-outgoing-slot="" id="slot_{{slot.id}}"
+                       class="slot outgoing slot_{{index}}"
+                       data-ng-repeat="(index,slot) in node.outgoingSlots"
+                       tooltip-placement="bottom"
+                       tooltip-append-to-body="true"
+                       tooltip="{{slot.title}}"
+                       data-ng-attr-transform="translate({{position.x}},{{position.y}})">
+                        <circle class="slotBack" r="10"></circle>
+                        <path class="slotArrow" d="M 0 5 l 4 -4 l -8 0 l 4 4"></path>
+                    </g>
+                    <rect class="rect" rx="4" ry="4"></rect>
+                </g>
+                <text class="title" font-size="18">{{node.title}}</text>
             </g>
         </g>
-    </svg>
-</div>
+        <g id="slot_new" class="slot incoming"
+           ng-if="addLinkState==1"
+           data-ng-attr-transform="translate({{newSlotPosition.x}},{{newSlotPosition.y}})">
+            <circle class="slotBack" r="10"></circle>
+            <path d="M 0 -1 l 4 -4 l -8 0 l 4 4" fill="rgba(255,255,255,0.5)"></path>
+        </g>
+    </g>
+</svg>
 <div class="controls">
     <div class="btn-group">
         <label class="btn btn-success" ng-click="zoomIn()">
@@ -80,5 +78,4 @@
             <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
         </label>
     </div>
-</div>
 </div>
