@@ -1,18 +1,5 @@
-<hot-table
-        datarows="items"
-        height="1000"
-        width="1000">
-    <hot-column data="id"                  title="'ID'"></hot-column>
-    <hot-column data="name.first"          title="'First Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-    <hot-column data="name.last"           title="'Last Name'"></hot-column>
-</hot-table>
+<hot-table ng-if="items.length" settings="{afterChange: afterChange }"
+           rowHeaders="false"
+           minSpareRows="minSpareRows"
+           datarows="items"></hot-table>
+        {{items}}

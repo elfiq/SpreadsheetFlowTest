@@ -21,6 +21,8 @@ angular.module('Nodeboard')
                                 });
                             }
                             $el[0].classList.add('selected');
+                            scope.$parent.$parent.$parent.currentNode = scope.node;
+                            scope.$apply();
                             event.bubbles = false;// что б парент не схватил событие
                             event.originalEvent.cancelBubble = true;// что б парент не схватил событие
                         },

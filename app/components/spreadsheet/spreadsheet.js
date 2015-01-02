@@ -10,9 +10,26 @@ angular
             templateUrl: function (elem, attr) {
                 return 'components/spreadsheet/spreadsheet.html'
             },
+            controller:function($scope,$timeout) {
+                $scope.items = [[1,3],[232,23]];
+                $scope.$parent.$parent.$watch('currentNode', function(value) {
+                    if (!value) {
+                        $scope.items = [];
+                        return;
+                    }
+                    $scope.items = [];
+                    $timeout(function() {
+                        $scope.items = value.data;
+                    },100);
+                });
+            },
+            link: function(scope, element) {
+                scope.items = [];
+            },
             compile: function (element, attrs) {
                 return function ($scope, element, attrs) {
-                    $scope.items = [
+
+                    /*
                         {
                             "id":1,
                             "name":{
@@ -39,7 +56,7 @@ angular
                             }
                         },
                         //more items go here
-                    ];
+                    ];*/
                 }
             }
         };

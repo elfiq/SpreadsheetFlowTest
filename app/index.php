@@ -28,7 +28,7 @@
     </div>
     <div id="result"></div>
 
-    <split-pane ng-controller="sfController">
+    <split-pane>
         <split-pane-component width="50%">
             <div id="table" data-ssh-table=""></div>
         </split-pane-component>
@@ -51,11 +51,9 @@
     <script src="bower_components/angular-split-pane/angular-split-pane.js"></script>
     <script src="bower_components/handsontable/dist/handsontable.full.js"></script>
     <script src="bower_components/angular-ui-handsontable/dist/ngHandsontable.js"></script>
-    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
 
 
-    <script src="data.js"></script>
     <script src="components/nodeboard/board/board.js"></script>
     <script src="components/nodeboard/data.js"></script>
     <script src="components/nodeboard/node/node.js"></script>
@@ -66,6 +64,7 @@
     <script src="components/googledrive/googledrive.js"></script>
 
     <script src="app.js"></script>
+    <script src="//apis.google.com/js/client.js?onload=onApiLoad"></script>
 
 </body>
 </html>
