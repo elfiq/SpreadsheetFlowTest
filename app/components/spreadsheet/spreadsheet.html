@@ -1,5 +1,11 @@
 <hot-table ng-if="items.length" settings="{afterChange: afterChange }"
-           rowHeaders="false"
+           rowHeaders="rowHeaders"
            minSpareRows="minSpareRows"
-           datarows="items"></hot-table>
-        {{items}}
+           manualColumnResize = "true"
+           colHeaders="colHeaders"
+           colWidths="data.columnWidths"
+           afterColumnResize="colResize"
+           cells="cells"
+           datarows="items">
+           </hot-table>
+        {{columns}}

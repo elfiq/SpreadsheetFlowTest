@@ -6,25 +6,61 @@
 angular
     .module('Spreadsheet', ['ngHandsontable'])
     .directive('sshTable', [function () {
+        var colLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        var getColTitle = function (colIndex) {
+            var letters = colLetters[colIndex%colLetters.length];
+            if (colIndex>=colLetters.length) {
+                colIndex = Math.floor(colIndex/colLetters.length-1);
+                letters = getColTitle(colIndex)+letters;
+            }
+            return letters;
+        };
+
         return {
             templateUrl: function (elem, attr) {
                 return 'components/spreadsheet/spreadsheet.html'
             },
             controller:function($scope,$timeout) {
-                $scope.items = [[1,3],[232,23]];
+                $scope.items = [];
+                $scope.columns = [];
+                $scope.colHeaders = function (index) {
+                    return getColTitle(index);
+                };
+                $scope.rowHeaders = function (index) {
+                    return index;
+                };
+                var ResultRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+                    arguments[5] = $scope.data.results[row][col];
+                    return Handsontable.renderers.TextRenderer.apply(this, arguments);
+                };
+                $scope.cells = function(row, col, prop) {
+                    var cellProperties = {}
+                    cellProperties.renderer = ResultRenderer;
+                    return cellProperties;
+                };
+                $scope.colResize = function(col, size) {
+                    if (!$.isArray($scope.data.columnWidths)) {
+                        $scope.data.columnWidths = [];
+                    }
+                    $scope.data.columnWidths[col] = size;
+                }
                 $scope.$parent.$parent.$watch('currentNode', function(value) {
                     if (!value) {
                         $scope.items = [];
+                        $scope.data = {};
                         return;
                     }
+                    $scope.data = {};
                     $scope.items = [];
                     $timeout(function() {
-                        $scope.items = value.data;
-                    },100);
+                        $scope.data = value.data;
+                        $scope.items = value.data.formulas;
+                    },0);
                 });
             },
             link: function(scope, element) {
                 scope.items = [];
+                scope.data = {};
             },
             compile: function (element, attrs) {
                 return function ($scope, element, attrs) {
