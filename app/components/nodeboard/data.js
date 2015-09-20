@@ -1,13 +1,22 @@
 /**
  * Created by rodion on 23.11.14.
  */
+ var nbState = {
+    currentNode:null
+ };
 angular.module('Nodeboard')
-    .factory('nbData', ['gdRealtime', function (gdRealtime) {
+    .factory('nbData', [function () {
         var watchers = {
             links:0,
             nodes:0
         };
         var service = {
+            getStateObject:function() {
+                return nbState;
+            },
+            setCurrentNode:function (value) {
+                nbState.currentNode = value;
+            },
             getNodes:function () {
                 return nodes;
             },

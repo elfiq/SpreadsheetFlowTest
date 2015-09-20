@@ -6,7 +6,7 @@
     stroke:none;
 }
 .node .slot.dragEnter{
-    stroke:#000;
+    fill:#000;
 }
 .node .slot .slotEmpty {
     fill:#fff;

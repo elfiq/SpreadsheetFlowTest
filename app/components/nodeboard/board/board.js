@@ -57,6 +57,7 @@ angular.module('Nodeboard', ['ngAnimate'])
                         'click':function (evt) {
                             $(".node.selected",$board).each(function () {
                                 this.classList.remove('selected');
+                                this.classList.remove('lastSelected');
                             });
                         }
                     });

@@ -5,7 +5,7 @@
 
 angular
     .module('Spreadsheet', ['ngHandsontable'])
-    .directive('sshTable', [function () {
+    .directive('sshTable', ['nbData', function (nbData) {
         var colLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         var getColTitle = function (colIndex) {
             var letters = colLetters[colIndex%colLetters.length];
@@ -44,7 +44,10 @@ angular
                     }
                     $scope.data.columnWidths[col] = size;
                 }
-                $scope.$parent.$parent.$watch('currentNode', function(value) {
+
+                $scope.state = nbData.getStateObject();
+
+                $scope.$watch('state.currentNode', function(value) {
                     if (!value) {
                         $scope.items = [];
                         $scope.data = {};

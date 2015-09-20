@@ -1,5 +1,6 @@
 .node .background{ fill: #c9c9c9 }
 .node .title { fill:#fff }
+.node .selRect { fill:#000; opacity: 0.05; display:none }
 .node.style1 .background { fill:#2B99CA }
 .node.style2 .background { fill: #89C644 }
 .node.style3 .background { fill: #DF1C1A }
@@ -17,10 +18,8 @@
 	stroke:#c9c9c9;
 }
 
-.node.selected {
-    stroke:#c9c9c9;
-    stroke-width:2px;
-}
+.node.selected .selRect { display:block }
+.node.lastSelected .selRect { opacity: 0.15 }
 
 .node.ng-enter, .node.ng-leave{
 	-webkit-transition:0.3s ease-in-out all;

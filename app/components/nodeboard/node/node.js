@@ -3,7 +3,7 @@
  */
 //'use strict';
 angular.module('Nodeboard')
-    .directive('nbNode',['$timeout','$animate',function ($timeout,$animate) {
+    .directive('nbNode',['$timeout','$animate','nbData',function ($timeout,$animate,nbData) {
         return {
             compile:function(element, attrs) {
                 var linkFunction = function(scope, element, attrs) {
@@ -12,16 +12,24 @@ angular.module('Nodeboard')
                     $el.bind({
                         'mousedown':function (event) {
                             $el.parent().append( $el );
-                            if ($el[0].classList.contains('selected')) {
-                                return;
-                            }
                             if (!event.shiftKey && !event.ctrlKey) {
+                                if ($el[0].classList.contains('lastSelected')) {
+                                    return;
+                                }
                                 $(".node.selected",$el.parent()).each(function () {
                                     this.classList.remove('selected');
+                                    this.classList.remove('lastSelected');
+                                });
+                            } else {
+                                $(".node.lastSelected",$el.parent()).each(function () {
+                                    this.classList.remove('lastSelected');
                                 });
                             }
                             $el[0].classList.add('selected');
-                            scope.$parent.$parent.$parent.currentNode = scope.node;
+                            $el[0].classList.add('lastSelected');
+
+                            nbData.setCurrentNode(scope.node);
+
                             scope.$apply();
                             event.bubbles = false;// что б парент не схватил событие
                             event.originalEvent.cancelBubble = true;// что б парент не схватил событие
@@ -59,10 +67,12 @@ angular.module('Nodeboard')
                         setTimeout(function () {
                             var title = $el.find(".title");
                             var rect = $el.find(".rect");
+                            var selRect = $el.find(".selRect");
                             var w = title[0].getBBox().width;
                             var h = title[0].getBBox().height;
                             title.attr({x:-w/2,y:h/2-5});
                             rect.attr({x:-w/2-10,y:-h/2-7,width:w+20,height:h+14});
+                            selRect.attr({x:-w/2-20,y:-h/2-16,width:w+40,height:h+32});
                             var ingoingSlots = $el.find(".ingoing");
                             var cnt = ingoingSlots.length;
                             var i;

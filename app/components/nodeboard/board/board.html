@@ -27,6 +27,7 @@
             data-ng-animate="'animate'"
             data-ng-repeat="node in nodes">
             <g class="innerWrap">
+                <rect class="selRect" rx="8" ry="8"></rect>
                 <g class="background" filter="url(#shadowfilter)">
                     <g nb-ingoing-slot="" id="slot_{{slot.id}}"
                        class="slot ingoing slot_{{index}}"
@@ -68,14 +69,6 @@
         </label>
         <label class="btn btn-success" ng-click="zoomOut()">
             <span class="glyphicon glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
-        </label>
-    </div>
-    <div class="btn-group">
-        <label class="btn btn-success" ng-click="newNode()">
-            <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </label>
-        <label class="btn btn-success" ng-click="removeSelection()">
-            <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
         </label>
     </div>
 </div>
